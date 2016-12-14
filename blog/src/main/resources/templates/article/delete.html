@@ -1,0 +1,46 @@
+<main>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                <article>
+                    <header>
+                        <h2 th:text="${article.title}"></h2>
+                    </header>
+
+                    <p th:text="${article.content}"></p>
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <small class="author" th:text="${article.author.fullName}"></small>
+                        </div>
+                        <div class="col-sm-2">
+                            <div th:if="${article.creationDate!=article.editedDate}">
+                                <ul class="list-unstyled">
+                                    <li> <small class="secondary-label">Last Edited:</small></li>
+                                    <li> <small class="secondary-label" th:text="${article.creationDate}"></small></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <ul class="list-unstyled">
+                                <li> <small class="secondary-label">Created on:</small></li>
+                                <li> <small class="secondary-label" th:text="${article.creationDate}"></small></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <h2 align="center">Content will be lost FOREVER</h2>
+                <form class="form-horizontal" th:action="@{/article/delete/{id}(id=${article.id})}" method="POST">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-4" style="text-align: center">
+                                <a class="btn btn-default" th:href="@{/article/{id}(id = ${article.id})}">Cancel</a>
+                                <input type="submit" class="btn btn-danger" value="Delete"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
