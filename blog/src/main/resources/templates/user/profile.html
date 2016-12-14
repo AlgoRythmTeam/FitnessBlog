@@ -8,6 +8,14 @@
                     <span th:text="${user.fullName}"></span>
                 </div>
             </div>
+            <div class="col-sm-3">
+                <h3 align="right">
+                    <a href=""
+                       th:text="${'My articles (' + #sets.size(articles) + ')'}">
+                    </a>
+                </h3>
+
+            </div>
         </div>
     </div>
 </main>

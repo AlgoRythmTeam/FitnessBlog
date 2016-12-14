@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import softuniBlog.bindingModel.UserBindingModel;
+import softuniBlog.entity.Article;
 import softuniBlog.entity.Role;
 import softuniBlog.entity.User;
 import softuniBlog.repository.RoleRepository;
 import softuniBlog.repository.UserRepository;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -87,9 +89,11 @@ public class UserController {
                 .getPrincipal();
 
         User user = this.userRepository.findByEmail(principal.getUsername());
+        Set<Article> articles=user.getArticles();
 
         model.addAttribute("user", user);
         model.addAttribute("view", "user/profile");
+        model.addAttribute("articles", articles);
 
         return "base-layout";
     }
