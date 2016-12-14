@@ -10,7 +10,7 @@
             </div>
             <div class="col-sm-3">
                 <h3 align="right">
-                    <a href=""
+                    <a th:href="@{/user{id}/articles(id=${user.id})}"
                        th:text="${'My articles (' + #sets.size(articles) + ')'}">
                     </a>
                 </h3>

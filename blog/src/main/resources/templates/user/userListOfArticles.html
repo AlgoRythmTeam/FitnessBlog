@@ -1,7 +1,7 @@
 <main>
     <div class="container body-content">
-        <h1 align="center">Category -
-            <th:block th:text="${category.name}"></th:block>
+        <h1 align="center">Content by
+            <th:block th:text="${user.fullName}"></th:block>
         </h1>
         <div class="row">
             <th:block th:each="article : ${articles}">
@@ -14,8 +14,7 @@
                         <p th:text="${article.summary}"></p>
                         <div class="row">
                             <div class="col-sm-8">
-                                <a class="author"  th:href="@{/user{id}/articles(id=${article.author.id})}"
-                                       th:text="${article.author.fullName}" ></a>
+                                <small class="author" th:text="${article.author.fullName}"></small>
                                 <p>
                                     <a class="btn btn-default btn-xs" th:each="tag:${article.tags}"
                                        th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>
