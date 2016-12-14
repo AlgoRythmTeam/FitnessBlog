@@ -104,6 +104,16 @@ public class Article {
         return this.getContent().substring(0,1 + this.getContent().length()/5) + "...";
     }
 
+    @Transient
+    public String getShortTitle(){
+
+        if (this.getTitle().length()>39){
+            return this.getTitle().substring(0,39) + "...";
+        }
+        else
+            return this.getTitle();
+    }
+
     public Date getEditedDate() {
         return editedDate;
     }
