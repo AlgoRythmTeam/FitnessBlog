@@ -19,8 +19,8 @@
                             <td th:text="${user.fullName}"></td>
                             <td th:text="${user.email}"></td>
                             <td>
-                                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Edit</a>
-                                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Delete</a>
+                                <a class="btn btn-success btn-xs" th:href="@{/admin/users/edit/{id}(id=${user.id})}">Edit</a>
+                                <a class="btn btn-danger btn-xs" th:href="@{/admin/users/delete/{id}(id=${user.id})}">Delete</a>
                             </td>
                         </tr>
                     </th:block>
