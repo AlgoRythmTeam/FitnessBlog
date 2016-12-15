@@ -10,14 +10,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import softuniBlog.bindingModel.UserBindingModel;
 import softuniBlog.entity.Article;
 import softuniBlog.entity.Role;
 import softuniBlog.entity.User;
+import softuniBlog.repository.ArticleRepository;
 import softuniBlog.repository.RoleRepository;
 import softuniBlog.repository.UserRepository;
 
@@ -31,6 +29,9 @@ public class UserController {
     RoleRepository roleRepository;
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ArticleRepository articleRepository;
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -95,6 +96,21 @@ public class UserController {
         model.addAttribute("view", "user/profile");
         model.addAttribute("articles", articles);
 
+        return "base-layout";
+    }
+
+    @GetMapping("/user{id}/articles")
+    public String listUserArticles(Model model, @PathVariable Integer id)
+    {
+        if(!this.userRepository.exists(id)){
+            return "redirect:/";
+        }
+        User user = this.userRepository.findById(id);
+        Set<Article> articles=user.getArticles();
+
+        model.addAttribute("view","user/userListOfArticles");
+        model.addAttribute("articles",articles);
+        model.addAttribute("user", user);
         return "base-layout";
     }
 }

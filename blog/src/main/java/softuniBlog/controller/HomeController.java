@@ -37,8 +37,7 @@ public class HomeController {
         model.addAttribute("view","error/403");
 
         return "base-layout";
-    }
-    @GetMapping("/category/{id}")
+    }    @GetMapping("/category/{id}")
     public String listArticles(Model model, @PathVariable Integer id){
 
         if(!this.categoryRepository.exists(id)){
@@ -47,17 +46,12 @@ public class HomeController {
 
         Category category=this.categoryRepository.findOne(id);
 
-
         Set<Article> articles=category.getArticles();
 
         model.addAttribute("view","home/listOfArticles");
         model.addAttribute("articles",articles);
         model.addAttribute("category",category);
         return "base-layout";
-
-
     }
-
-
 
 }
