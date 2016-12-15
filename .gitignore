@@ -12,3 +12,6 @@
 hs_err_pid*
 
 /mysql
+
+mysql_start.bat
+mysql_stop.bat
