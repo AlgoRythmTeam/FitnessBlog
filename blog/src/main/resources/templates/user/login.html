@@ -1,7 +1,8 @@
 <main>
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" th:action="@{/login}" method="post">
+            <div class="alert alert-danger" th:if="${errorMessage != null}" align="center" th:text="${errorMessage}"></div>
+            <form class="form-horizontal" th:action="@{/login}" method="post" authentication-failure-url="/login.html?error=true">
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">

@@ -41,9 +41,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerProcess(UserBindingModel userBindingModel){
+    public String registerProcess(UserBindingModel userBindingModel) {
 
-        if(!userBindingModel.getPassword().equals(userBindingModel.getConfirmPassword())){
+        if (!userBindingModel.getPassword().equals(userBindingModel.getConfirmPassword())) {
+            
             return "redirect:/register";
         }
 
@@ -65,14 +66,19 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(Model model){
+    public String login(@RequestParam(required = false) String error, Model model) {
+
+        if (error != null) {
+            model.addAttribute("errorMessage", "Username or password incorrect!!!!");
+        }
+
         model.addAttribute("view", "user/login");
 
         return "base-layout";
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null) {
@@ -84,13 +90,13 @@ public class UserController {
 
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
-    public String profilePage(Model model){
+    public String profilePage(Model model) {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
 
         User user = this.userRepository.findByEmail(principal.getUsername());
-        Set<Article> articles=user.getArticles();
+        Set<Article> articles = user.getArticles();
 
         model.addAttribute("user", user);
         model.addAttribute("view", "user/profile");
@@ -100,16 +106,15 @@ public class UserController {
     }
 
     @GetMapping("/user{id}/articles")
-    public String listUserArticles(Model model, @PathVariable Integer id)
-    {
-        if(!this.userRepository.exists(id)){
+    public String listUserArticles(Model model, @PathVariable Integer id) {
+        if (!this.userRepository.exists(id)) {
             return "redirect:/";
         }
         User user = this.userRepository.findById(id);
-        Set<Article> articles=user.getArticles();
+        Set<Article> articles = user.getArticles();
 
-        model.addAttribute("view","user/userListOfArticles");
-        model.addAttribute("articles",articles);
+        model.addAttribute("view", "user/userListOfArticles");
+        model.addAttribute("articles", articles);
         model.addAttribute("user", user);
         return "base-layout";
     }
