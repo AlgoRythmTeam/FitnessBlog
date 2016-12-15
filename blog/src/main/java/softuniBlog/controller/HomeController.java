@@ -46,7 +46,7 @@ public class HomeController {
 
         Category category=this.categoryRepository.findOne(id);
 
-        Set<Article> articles = category.getArticles();
+        Set<Article> articles=category.getArticles();
 
         model.addAttribute("view","home/listOfArticles");
         model.addAttribute("articles",articles);
