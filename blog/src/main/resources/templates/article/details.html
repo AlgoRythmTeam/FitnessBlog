@@ -14,21 +14,33 @@
                             <a class="author"  th:href="@{/user{id}/articles(id=${article.author.id})}"
                                    th:text="${article.author.fullName}"></a>
                             <p>
-                                <a class="btn btn-default btn-xs" th:each="tag:${article.tags}" th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>
+                                <a class="btn btn-default btn-xs"
+                                   th:each="tag:${article.tags}"
+                                   th:href="@{/tag/{name}(name=${tag.name})}"
+                                   th:text="${tag.name}"></a>
                             </p>
+                            <p>
+                                <a class="btn btn-default btn-sm"
+                                   >Rating</a>
+                            </p>
+
+
                         </div>
                         <div class="col-sm-2">
                             <div th:if="${article.creationDate!=article.editedDate}">
                                 <ul class="list-unstyled">
                                     <li> <small class="secondary-label">Last Edited:</small></li>
-                                    <li> <small class="secondary-label" th:text="${article.creationDate}"></small></li>
+                                    <li> <small class="secondary-label"
+                                                th:text="${#dates.format(article.editedDate,'HH:mm:ss dd-MM-yyyy')}"></small></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <ul class="list-unstyled">
                                 <li> <small class="secondary-label">Created on:</small></li>
-                                <li> <small class="secondary-label" th:text="${article.creationDate}"></small></li>
+                                <li> <small class="secondary-label"
+                                            th:text="${#dates.format(article.creationDate,'HH:mm:ss dd-MM-yyyy')}">
+                                </small></li>
                             </ul>
                         </div>
                     </div>
