@@ -6,9 +6,7 @@
                     <header>
                         <h2 th:text="${article.title}"></h2>
                     </header>
-
                     <p th:text="${article.content}"> </p>
-
                     <div class="row">
                         <div class="col-sm-8">
                             <a class="author"  th:href="@{/user{id}/articles(id=${article.author.id})}"
@@ -23,8 +21,6 @@
                                 <a class="btn btn-default btn-sm"
                                    >Rating</a>
                             </p>
-
-
                         </div>
                         <div class="col-sm-2">
                             <div th:if="${article.creationDate!=article.editedDate}">
@@ -60,7 +56,4 @@
             </div>
         </div>
     </div>
-
-
-
 </main>

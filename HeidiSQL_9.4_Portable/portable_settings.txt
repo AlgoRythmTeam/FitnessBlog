@@ -4,7 +4,7 @@ ColWidths_connform.ListSessions<|||>1<|||>163,50,50,50,50,50,53
 ColsVisible_connform.ListSessions<|||>1<|||>0
 ColPositions_connform.ListSessions<|||>1<|||>0,1,2,3,4,5,6
 ColSort_connform.ListSessions<|||>1<|||>0,0
-ColWidths_frmTableEditor.listColumns<|||>1<|||>54,100,156,90,60,65,50,119,130,140,100,100
+ColWidths_frmTableEditor.listColumns<|||>1<|||>70,100,156,90,60,65,50,119,130,140,100,100
 ColsVisible_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
 ColPositions_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
 ColSort_frmTableEditor.listColumns<|||>1<|||>-1,0
@@ -47,7 +47,7 @@ ColWidths_MainForm.ListTables<|||>1<|||>120,70,70,120,120,70,100,50,70,70,70,70,
 ColsVisible_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,18
 ColPositions_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
 ColSort_MainForm.ListTables<|||>1<|||>0,0
-MainWinLeft<|||>3<|||>178
+MainWinLeft<|||>3<|||>147
 MainWinTop<|||>3<|||>127
 MainWinWidth<|||>3<|||>1219
 Servers\Unnamed\SessionCreated<|||>1<|||>2016-10-31 14:03:39
@@ -79,9 +79,9 @@ Servers\Unnamed\SSL_Cert<|||>1<|||>
 Servers\Unnamed\SSL_CA<|||>1<|||>
 Servers\Unnamed\SSL_Cipher<|||>1<|||>
 Servers\Unnamed\ServerVersionFull<|||>1<|||>10.1.13-MariaDB - mariadb.org binary distribution
-Servers\Unnamed\ConnectCount<|||>3<|||>21
+Servers\Unnamed\ConnectCount<|||>3<|||>22
 Servers\Unnamed\ServerVersion<|||>3<|||>100113
-Servers\Unnamed\LastConnect<|||>1<|||>2016-12-17 04:44:53
+Servers\Unnamed\LastConnect<|||>1<|||>2016-12-17 13:50:00
 Servers\Unnamed\lastUsedDB<|||>1<|||>javablog
 Servers\Unnamed\javablog|articles\Sort<|||>1<|||>1_creation_date|0_category_id|1_rating_id|
 Servers\Unnamed\javablog|roles\Sort<|||>1<|||>0_id|1_name|

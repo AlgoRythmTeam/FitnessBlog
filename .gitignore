@@ -12,8 +12,9 @@
 hs_err_pid*
 
 /mysql
+/HeidiSQL_9.4_Portable
 
 mysql_start.bat
 mysql_stop.bat
 
-/HeidiSQL_9.4_Portable
+
