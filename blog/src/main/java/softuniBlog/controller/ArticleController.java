@@ -181,7 +181,6 @@ public class ArticleController {
         model.addAttribute("view", "article/delete");
         model.addAttribute("article", article);
 
-
         return "base-layout";
     }
 
@@ -196,12 +195,8 @@ public class ArticleController {
         if (!isUserAuthorOrAdmin(article)) {
             return "redirect:/article/" + id;
         }
-
-
         this.articleRepository.delete(article);
         return "redirect:/";
-
-
     }
 
 
