@@ -64,14 +64,12 @@ public class WorkoutController {
                 userEntity,
                 time,
                 workoutBindingModel.getChest(),
-                workoutBindingModel.getLegs(),
+                workoutBindingModel.getAbs(),
                 workoutBindingModel.getBack(),
+                workoutBindingModel.getShoulders(),
                 workoutBindingModel.getBiceps(),
-                4,
-                5,
-                7
-
-
+                workoutBindingModel.getTriceps(),
+                workoutBindingModel.getLegs()
         );
 
         this.workoutRepository.saveAndFlush(workoutEntity);
@@ -79,12 +77,4 @@ public class WorkoutController {
         return "redirect:/profile";
 
     }
-
-
-
-
-
-
-
-
 }

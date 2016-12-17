@@ -24,13 +24,17 @@ public class WorkoutBindingModel {
 
     public void setChest(Integer chest) {this.chest = chest;}
 
-    public Integer getLegs() {return legs;}
+    public Integer getAbs() {return abs;}
 
-    public void setLegs(Integer legs) {this.legs = legs;}
+    public void setAbs(Integer abs) {this.abs = abs;}
 
     public Integer getBack() {return back;}
 
     public void setBack(Integer back) {this.back = back;}
+
+    public Integer getShoulders() {return shoulders;}
+
+    public void setShoulders(Integer shoulders) {this.shoulders = shoulders;}
 
     public Integer getBiceps() {return biceps;}
 
@@ -40,11 +44,8 @@ public class WorkoutBindingModel {
 
     public void setTriceps(Integer triceps) {this.triceps = triceps;}
 
-    public Integer getAbs() {return abs;}
+    public Integer getLegs() {return legs;}
 
-    public void setAbs(Integer abs) {this.abs = abs;}
+    public void setLegs(Integer legs) {this.legs = legs;}
 
-    public Integer getShoulders() {return shoulders;}
-
-    public void setShoulders(Integer shoulders) {this.shoulders = shoulders;}
 }

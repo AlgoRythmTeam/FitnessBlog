@@ -19,29 +19,29 @@ public class Workout {
 
     private Integer chest;
 
-    private Integer legs;
+    private Integer abs;
 
     private Integer back;
+
+    private Integer shoulders;
 
     private Integer biceps;
 
     private Integer triceps;
 
-    private Integer abs;
-
-    private Integer shoulders;
+    private Integer legs;
 
 
     public Workout(User worker, Date trainingDay, Integer chest, Integer legs, Integer back, Integer biceps, Integer triceps, Integer abs, Integer shoulders) {
         this.worker = worker;
         this.trainingDay = trainingDay;
         this.chest = chest;
-        this.legs = legs;
+        this.abs = abs;
         this.back = back;
+        this.shoulders = shoulders;
         this.biceps = biceps;
         this.triceps = triceps;
-        this.abs = abs;
-        this.shoulders = shoulders;
+        this.legs = legs;
     }
 
     public Workout() {   }
@@ -83,12 +83,12 @@ public class Workout {
         this.chest = chest;
     }
 
-    public Integer getLegs() {
-        return legs;
+    public Integer getAbs() {
+        return abs;
     }
 
-    public void setLegs(Integer legs) {
-        this.legs = legs;
+    public void setAbs(Integer abs) {
+        this.abs = abs;
     }
 
     public Integer getBack() {
@@ -97,6 +97,14 @@ public class Workout {
 
     public void setBack(Integer back) {
         this.back = back;
+    }
+
+    public Integer getShoulders() {
+        return shoulders;
+    }
+
+    public void setShoulders(Integer shoulders) {
+        this.shoulders = shoulders;
     }
 
     public Integer getBiceps() {
@@ -115,19 +123,12 @@ public class Workout {
         this.triceps = triceps;
     }
 
-    public Integer getAbs() {
-        return abs;
+    public Integer getLegs() {
+        return legs;
     }
 
-    public void setAbs(Integer abs) {
-        this.abs = abs;
+    public void setLegs(Integer legs) {
+        this.legs = legs;
     }
 
-    public Integer getShoulders() {
-        return shoulders;
-    }
-
-    public void setShoulders(Integer shoulders) {
-        this.shoulders = shoulders;
-    }
 }
