@@ -1,0 +1,91 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <div>
+                <h2 align="center" th:text=" 'Hello '+ ${user.fullName}+'. How was your training?'"></h2>
+            </div>
+            <form class="form-horizontal" th:action="@{/workout/create}" method="POST">
+                <fieldset>
+                    <legend align="center">Enter Daily workout information</legend>
+
+                    <div align="center">
+                        <p>
+                            Please enter your daily training information. In the chest field enter.....
+
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="workout_chest">Chest Rep</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="workout_chest" placeholder="Eneter chest reps"
+                                   name="chest" required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="workout_legs">Legs Rep</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="workout_legs" placeholder="Eneter Legs reps"
+                                   name="legs" required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="workout_back">Back Rep</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="workout_back" placeholder="Eneter back reps"
+                                   name="back" required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="workout_biceps">Biceps Rep</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="workout_biceps" placeholder="Eneter biceps reps"
+                                   name="biceps" required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+
+                            <a class="btn btn-default" th:href="@{/}">Cancel</a>
+                            <input type="submit" class="btn btn-primary" value="Submit"/>
+
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="row">
+            <table class="table table-striped table-hover ">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Chest</th>
+                    <th>Legs</th>
+                    <th>Back</th>
+                    <th>Biceps</th>
+                    <th>Abs</th>
+                    <th>Shoulders</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="workout : ${workouts}">
+                    <tr>
+                        <td th:text="${#dates.format(workout.trainingDay,'dd MMM yy')}"></td>
+                        <td th:text="${workout.chest}"></td>
+                        <td th:text="${workout.legs}"></td>
+                        <td th:text="${workout.back}"></td>
+                        <td th:text="${workout.biceps}"></td>
+                        <td th:text="${workout.abs}"></td>
+                        <td th:text="${workout.shoulders}"></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
