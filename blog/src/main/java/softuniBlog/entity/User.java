@@ -25,7 +25,7 @@ public class User {
 
     private Set<Comment> comments;
 
-    private Set<Workout> workout;
+    private Set<Workout> workouts;
 
 
     public User(String email, String fullName, String password) {
@@ -36,7 +36,7 @@ public class User {
         this.roles = new HashSet<>();
         this.articles = new HashSet<>();
         this.comments=new HashSet<>();
-        this.workout=new HashSet<>();
+        this.workouts=new HashSet<>();
     }
 
     public User() {    }
@@ -111,12 +111,12 @@ public class User {
     }
 
     @OneToMany(mappedBy = "worker")
-    public Set<Workout> getWorkout() {
-        return workout;
+    public Set<Workout> getWorkouts() {
+        return workouts;
     }
 
-    public void setWorkout(Set<Workout> workout) {
-        this.workout = workout;
+    public void setWorkouts(Set<Workout> workout) {
+        this.workouts = workout;
     }
 
     @Transient
