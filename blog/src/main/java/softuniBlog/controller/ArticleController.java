@@ -12,16 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import softuniBlog.bindingModel.ArticleBindingModel;
-import softuniBlog.entity.Article;
-import softuniBlog.entity.Category;
-import softuniBlog.entity.Tag;
-import softuniBlog.entity.User;
-import softuniBlog.repository.ArticleRepository;
-import softuniBlog.repository.CategoryRepository;
-import softuniBlog.repository.TagRepository;
-import softuniBlog.repository.UserRepository;
+import softuniBlog.entity.*;
+import softuniBlog.repository.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +35,9 @@ public class ArticleController {
 
     @Autowired
     private TagRepository tagRepository;
+
+    @Autowired
+    private RatingRepository ratingRepository;
 
     @GetMapping("/article/create")
     @PreAuthorize("isAuthenticated()")
@@ -213,7 +211,7 @@ public class ArticleController {
 
         HashSet<Tag> tags = new HashSet<>();
 
-        String[] tagNames = tagString.split(",\\s*");
+        String[] tagNames = tagString.split(",\\s*|\\s+");
 
         for (String tagName : tagNames) {
             Tag currentTag = this.tagRepository.findByName(tagName);

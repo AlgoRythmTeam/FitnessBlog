@@ -4,7 +4,11 @@ ColWidths_connform.ListSessions<|||>1<|||>163,50,50,50,50,50,53
 ColsVisible_connform.ListSessions<|||>1<|||>0
 ColPositions_connform.ListSessions<|||>1<|||>0,1,2,3,4,5,6
 ColSort_connform.ListSessions<|||>1<|||>0,0
+<<<<<<< HEAD
 ColWidths_frmTableEditor.listColumns<|||>1<|||>70,100,156,90,60,65,50,119,130,140,100,100
+=======
+ColWidths_frmTableEditor.listColumns<|||>1<|||>54,100,156,90,60,65,50,119,130,140,100,100
+>>>>>>> 92f7d5867b0c2b60237ee2d761e6291f6f758f32
 ColsVisible_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
 ColPositions_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
 ColSort_frmTableEditor.listColumns<|||>1<|||>-1,0
@@ -18,10 +22,10 @@ ColPositions_frmTableEditor.listForeignKeys<|||>1<|||>0,1,2,3,4,5
 ColSort_frmTableEditor.listForeignKeys<|||>1<|||>-1,0
 CoolBand0Index<|||>3<|||>0
 CoolBand0Break<|||>3<|||>1
-CoolBand0Width<|||>3<|||>1033
+CoolBand0Width<|||>3<|||>1197
 CoolBand1Index<|||>3<|||>1
 CoolBand1Break<|||>3<|||>1
-CoolBand1Width<|||>3<|||>1033
+CoolBand1Width<|||>3<|||>1197
 MainWinOnMonitor<|||>3<|||>0
 ColWidths_MainForm.ListDatabases<|||>1<|||>150,80,50,50,50,50,50,50,50,50,120
 ColsVisible_MainForm.ListDatabases<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10
@@ -49,6 +53,7 @@ ColPositions_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
 ColSort_MainForm.ListTables<|||>1<|||>0,0
 MainWinLeft<|||>3<|||>178
 MainWinTop<|||>3<|||>127
+<<<<<<< HEAD
 MainWinWidth<|||>3<|||>1055
 ColWidths_frmInsertFiles.ListColumns<|||>1<|||>100,80,278
 ColsVisible_frmInsertFiles.ListColumns<|||>1<|||>0,1,2
@@ -58,6 +63,9 @@ ColWidths_frmInsertFiles.ListFiles<|||>1<|||>325,70,80
 ColsVisible_frmInsertFiles.ListFiles<|||>1<|||>0,1,2
 ColPositions_frmInsertFiles.ListFiles<|||>1<|||>0,1,2
 ColSort_frmInsertFiles.ListFiles<|||>1<|||>0,0
+=======
+MainWinWidth<|||>3<|||>1219
+>>>>>>> 92f7d5867b0c2b60237ee2d761e6291f6f758f32
 Servers\Unnamed\SessionCreated<|||>1<|||>2016-10-31 14:03:39
 Servers\Unnamed\Host<|||>1<|||>127.0.0.1
 Servers\Unnamed\WindowsAuth<|||>3<|||>0
@@ -87,8 +95,15 @@ Servers\Unnamed\SSL_Cert<|||>1<|||>
 Servers\Unnamed\SSL_CA<|||>1<|||>
 Servers\Unnamed\SSL_Cipher<|||>1<|||>
 Servers\Unnamed\ServerVersionFull<|||>1<|||>10.1.13-MariaDB - mariadb.org binary distribution
+<<<<<<< HEAD
 Servers\Unnamed\ConnectCount<|||>3<|||>14
 Servers\Unnamed\ServerVersion<|||>3<|||>100113
 Servers\Unnamed\LastConnect<|||>1<|||>2016-12-16 19:38:17
+=======
+Servers\Unnamed\ConnectCount<|||>3<|||>21
+Servers\Unnamed\ServerVersion<|||>3<|||>100113
+Servers\Unnamed\LastConnect<|||>1<|||>2016-12-17 04:44:53
+>>>>>>> 92f7d5867b0c2b60237ee2d761e6291f6f758f32
 Servers\Unnamed\lastUsedDB<|||>1<|||>javablog
-Servers\Unnamed\javablog|articles\Sort<|||>1<|||>1_creation_date|
+Servers\Unnamed\javablog|articles\Sort<|||>1<|||>1_creation_date|0_category_id|1_rating_id|
+Servers\Unnamed\javablog|roles\Sort<|||>1<|||>0_id|1_name|

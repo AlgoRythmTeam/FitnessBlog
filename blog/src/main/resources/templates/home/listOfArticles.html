@@ -26,7 +26,9 @@
                                         <small class="secondary-label">Created on:</small>
                                     </li>
                                     <li>
-                                        <small class="secondary-label" th:text="${article.creationDate}"></small>
+                                        <small class="secondary-label"
+                                               th:text="${#dates.format(article.creationDate, 'dd-MM-yyyy')}">
+                                        </small>
                                     </li>
                                 </ul>
                             </div>

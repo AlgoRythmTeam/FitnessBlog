@@ -20,6 +20,17 @@ public class Article {
     private Date editedDate;
     private Category category;
     private Set<Tag> tags;
+    private Rating rating;
+
+
+    @OneToOne(mappedBy = "article")
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
 
     @ManyToMany()
     @JoinColumn(table = "articles_tags")
@@ -59,6 +70,7 @@ public class Article {
     public void setTitle(String title) {
         this.title = title;
     }
+
     @Column(columnDefinition = "text",nullable = false)
     public String getContent() {
         return content;
@@ -77,15 +89,14 @@ public class Article {
         this.author = author;
     }
 
-    public Article(String title, String content, User author, Date createddate, Date editedDate, Category category, HashSet<Tag> tags){
+    public Article(String title, String content, User author, Date createdDate, Date editedDate, Category category, HashSet<Tag> tags){
         this.title=title;
         this.content=content;
         this.author=author;
-        this.creationDate = createddate;
+        this.creationDate = createdDate;
         this.editedDate=editedDate;
         this.category=category;
         this.tags=tags;
-
     }
 
     public Article(){    }
