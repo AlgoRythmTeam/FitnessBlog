@@ -24,7 +24,7 @@ public class User {
     private Set<Article> articles;
 
     private Set<Comment> comments;
-    
+
     public User(String email, String fullName, String password) {
         this.email = email;
         this.password = password;
