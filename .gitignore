@@ -11,9 +11,11 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+/HeidiSQL_9.4_Portable
 /mysql
+
 
 mysql_start.bat
 mysql_stop.bat
 
-/HeidiSQL_9.4_Portable
+
