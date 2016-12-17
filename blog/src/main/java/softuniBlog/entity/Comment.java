@@ -1,5 +1,9 @@
 package softuniBlog.entity;
 
+
+
+
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -70,6 +74,5 @@ public class Comment {
         this.article = article;
 
     }
-
 
 }
