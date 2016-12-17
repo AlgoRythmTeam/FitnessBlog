@@ -25,6 +25,9 @@ public class User {
 
     private Set<Comment> comments;
 
+    private Set<Workout> workout;
+
+
     public User(String email, String fullName, String password) {
         this.email = email;
         this.password = password;
@@ -33,6 +36,7 @@ public class User {
         this.roles = new HashSet<>();
         this.articles = new HashSet<>();
         this.comments=new HashSet<>();
+        this.workout=new HashSet<>();
     }
 
     public User() {    }
@@ -106,7 +110,14 @@ public class User {
         this.comments = comments;
     }
 
+    @OneToMany(mappedBy = "worker")
+    public Set<Workout> getWorkout() {
+        return workout;
+    }
 
+    public void setWorkout(Set<Workout> workout) {
+        this.workout = workout;
+    }
 
     @Transient
     public boolean isAdmin(){
