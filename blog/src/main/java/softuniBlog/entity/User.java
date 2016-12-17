@@ -23,7 +23,8 @@ public class User {
 
     private Set<Article> articles;
 
-
+    private Set<Comment> comments;
+    
     public User(String email, String fullName, String password) {
         this.email = email;
         this.password = password;
@@ -31,7 +32,7 @@ public class User {
 
         this.roles = new HashSet<>();
         this.articles = new HashSet<>();
-
+        this.comments=new HashSet<>();
     }
 
     public User() {    }
@@ -95,6 +96,17 @@ public class User {
     public void setArticles(Set<Article> articles) {
         this.articles = articles;
     }
+
+    @OneToMany(mappedBy = "commentAuthor")
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+
 
     @Transient
     public boolean isAdmin(){

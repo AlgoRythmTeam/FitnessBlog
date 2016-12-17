@@ -44,7 +44,7 @@ public class UserController {
     public String registerProcess(UserBindingModel userBindingModel) {
 
         if (!userBindingModel.getPassword().equals(userBindingModel.getConfirmPassword())) {
-            
+
             return "redirect:/register";
         }
 
@@ -71,7 +71,6 @@ public class UserController {
         if (error != null) {
             model.addAttribute("errorMessage", "Username or password incorrect!!!!");
         }
-
         model.addAttribute("view", "user/login");
 
         return "base-layout";
