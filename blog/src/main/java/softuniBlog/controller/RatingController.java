@@ -22,7 +22,10 @@ import softuniBlog.repository.RatingRepository;
 import softuniBlog.repository.UserRatingRepository;
 import softuniBlog.repository.UserRepository;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class RatingController {
@@ -47,6 +50,10 @@ public class RatingController {
             return "redirect:/";
         }
 
+        Article article = this.articleRepository.findOne(id);
+
+        model.addAttribute("article", article);
+
         if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
 
             UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -54,62 +61,97 @@ public class RatingController {
             User entityUser = this.userRepository.findByEmail(principal.getUsername());
 
             model.addAttribute("user", entityUser);
-        }
 
-        Article article = this.articleRepository.findOne(id);
+
+            Rating currentRating = article.getRating();
+
+
+            Set<UserRating> currentUserRatings = currentRating.getUserRatings();
+
+            for (UserRating currentUserRating : currentUserRatings) {
+
+                if (currentUserRating.getRatingAuthor()==entityUser){
+
+                    String value=currentUserRating.getRatingValue().toString();
+                    String stars="";
+                    switch (value){
+                        case "0" :  stars="&#x2606;&#x2606;&#x2606;&#x2606;" ; break;
+                        case "1" :  stars="&#x2605;&#x2606;&#x2606;&#x2606;" ; break;
+                        case "2" :  stars="&#x2605;&#x2605;&#x2606;&#x2606;" ; break;
+                        case "3" :  stars="&#x2605;&#x2605;&#x2605;&#x2606;" ; break;
+                        case "4" :  stars="&#x2605;&#x2605;&#x2605;&#x2605;" ; break;
+                    }
+                    model.addAttribute("errorMessage2",
+                             "You have already rated this article with "
+                                     + " " + stars + " ! If you submit again the old rating would be lost!");
+                }
+            }
+        }
 
         if (errorMes != null) {
-            model.addAttribute("errorMessage", "Please choose a rating before submision !");
+            model.addAttribute("errorMessage", "Please choose a rating before submission !");
         }
-
-
-        //if (article.getRating().getUsersRating().containsKey(entityUser)){
-
-        // }
-
-
-        model.addAttribute("article", article);
 
         model.addAttribute("view", "rating/rateArticle");
 
+
         return "base-layout";
     }
+
+
+
 
 
     @PostMapping("/article/{id}/rating")
     @PreAuthorize("isAuthenticated()")
     public String createProcess(Model model, @PathVariable Integer id, UserRatingBindingModel ratingBindingModel) {
 
-        if (ratingBindingModel.getRating() == null) {
 
-            this.create(model, id, "sendError");
+   Set<String> expected =new HashSet<String>(Arrays.asList("0", "1", "2","3" ,"4"));
 
-            System.out.print("Activated");
+       // if (!expected.contains(ratingBindingModel.getRating().toString())) {
+//
+       //     return "redirect:/article/" + id+"ratingError";
+       // }
+
+        if ( expected.contains(ratingBindingModel.getRating().toString())) {
+
+            UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            User entityUser = this.userRepository.findByEmail(principal.getUsername());
+
+            Article article = this.articleRepository.findOne(id);
+
+            Integer ratingValue = Integer.parseInt(ratingBindingModel.getRating());
+
+            Date time = new Date();
+
+            Rating rating = new Rating(article);
+
+            this.ratingRepository.saveAndFlush(rating);
+
+
+            UserRating userRatingEntity = new UserRating(entityUser, time, ratingValue, rating);
+
+            this.userRatingRepository.saveAndFlush(userRatingEntity);
+
         }
-
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        User entityUser = this.userRepository.findByEmail(principal.getUsername());
-
-        Article article = this.articleRepository.findOne(id);
-
-        Integer ratingValue = Integer.parseInt(ratingBindingModel.getRating());
-
-        Date time = new Date();
-
-        Rating rating=new Rating(article);
-
-        this.ratingRepository.saveAndFlush(rating);
-
-        UserRating userRatingEntity = new UserRating(entityUser ,time, ratingValue, rating);
-
-        this.userRatingRepository.saveAndFlush(userRatingEntity);
-
-
-
-
         return "redirect:/article/" + id;
     }
 
+
+    @GetMapping("/article/{id}/ratingError")
+    @PreAuthorize("isAuthenticated()")
+    public String ratingError1(Model model, @PathVariable Integer id, String errorMes) {
+
+        if (!this.articleRepository.exists(id)) {
+            return "redirect:/";
+        }
+
+
+        model.addAttribute("view", "rating/error");
+
+        return "base-layout";
+    }
 
 }
