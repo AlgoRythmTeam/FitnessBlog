@@ -38,13 +38,13 @@ public class Comment {
     }
 
     @ManyToOne
-    @JoinColumn(nullable = false,name = "authorId")
+    @JoinColumn(nullable = false,name = "commentAuthorId")
     public User getCommentAuthor() {
         return commentAuthor;
     }
 
-    public void setCommentAuthor(User author) {
-        this.commentAuthor = author;
+    public void setCommentAuthor(User commentAuthor) {
+        this.commentAuthor = commentAuthor;
     }
 
     public Date getCreationDate() {
@@ -67,9 +67,9 @@ public class Comment {
 
     public Comment () {};
 
-    public Comment(String content, User author, Date createddate, Article article) {
+    public Comment(String content, User commentAuthor, Date createddate, Article article) {
         this.content = content;
-        this.commentAuthor = author;
+        this.commentAuthor = commentAuthor;
         this.creationDate = createddate;
         this.article = article;
 

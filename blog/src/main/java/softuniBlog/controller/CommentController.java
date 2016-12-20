@@ -18,6 +18,7 @@ import softuniBlog.repository.CommentRepository;
 import softuniBlog.repository.UserRepository;
 
 import java.util.Date;
+import java.util.Set;
 
 @Controller
 public class CommentController {
@@ -31,6 +32,24 @@ public class CommentController {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @GetMapping("/comment{id}/comments")
+    @PreAuthorize("isAuthenticated()")
+    public String commentList(Model model,@PathVariable Integer id){
+
+        if (!this.articleRepository.exists(id)) {
+            return "redirect:/";
+        }
+
+        Article article = this.articleRepository.findOne(id);
+        Set<Comment> comments= article.getComments();
+
+        model.addAttribute("view","comment/viewComments");
+        model.addAttribute("article", article);
+        model.addAttribute("comments", comments);
+
+        return "base-layout" ;
+    }
+
     @GetMapping("/comment/create/{id}")
     @PreAuthorize("isAuthenticated()")
     public String createComment(Model model,@PathVariable Integer id) {
@@ -41,8 +60,10 @@ public class CommentController {
 
         Article article = this.articleRepository.findOne(id);
 
+
         model.addAttribute("view", "comment/create");
         model.addAttribute("article", article);
+
 
 
         return "base-layout";
@@ -68,7 +89,6 @@ public class CommentController {
         this.commentRepository.saveAndFlush(commentEntity);
 
         return "redirect:/article/"+id;
-
     }
 
 }
