@@ -5,7 +5,7 @@
                 <header>
                     <h2 align="center">
                         <a th:href="@{/category/{id}(id=${category.id})}"
-                           th:text="${category.name + ' (' + #sets.size(category.articles) + ')'}">
+                        th:text="${category.name + ' (' + #sets.size(category.articles) + ')'}">
                         </a>
                     </h2>
                 </header>

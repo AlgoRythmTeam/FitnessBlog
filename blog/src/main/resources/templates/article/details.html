@@ -51,15 +51,16 @@
                             <a class="btn btn-danger btn-xs" th:href="@{/article/delete/{id}(id = ${article.id})}">Delete</a>
                             </th:block>
                             <th:block sec:authorize="isAuthenticated()">
-                            <a class="btn btn-info btn-xs" th:href="@{/comment/create/{id}(id = ${article.id})}">Add Comment</a>
-                            </th:block>
-                            <a class="btn btn-default btn-xs" th:href="@{/}">back &raquo;</a>
+                                <a class="btn btn-info btn-xs" th:href="@{/comment{id}/comments(id = ${article.id})}"
+                                   th:text="${'View Comments (' + #sets.size(article.comments) + ')'}"></a>
+                                </th:block>
+                                <a class="btn btn-default btn-xs" th:href="@{/}">back &raquo;</a>
+                                </div>
                             </div>
-                        </div>
-                        </div>
-                    </footer>
-                </article>
+                            </div>
+                        </footer>
+                    </article>
+                </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>

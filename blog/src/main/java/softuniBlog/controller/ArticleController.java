@@ -39,6 +39,9 @@ public class ArticleController {
     @Autowired
     private RatingRepository ratingRepository;
 
+    @Autowired
+    private CommentRepository commentRepository;
+
     @GetMapping("/article/create")
     @PreAuthorize("isAuthenticated()")
     public String create(Model model) {
@@ -188,6 +191,10 @@ public class ArticleController {
             return "redirect:/";
         }
         Article article = this.articleRepository.findOne(id);
+
+        for (Comment comment: article.getComments()){
+            this.commentRepository.delete(comment);
+        }
 
         if (!isUserAuthorOrAdmin(article)) {
             return "redirect:/article/" + id;

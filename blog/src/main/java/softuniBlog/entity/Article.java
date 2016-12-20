@@ -21,6 +21,7 @@ public class Article {
     private Category category;
     private Set<Tag> tags;
     private Rating rating;
+    private Set<Comment> comments;
 
 
     @OneToOne(mappedBy = "article")
@@ -89,6 +90,15 @@ public class Article {
         this.author = author;
     }
 
+    @OneToMany(mappedBy = "article")
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
     public Article(String title, String content, User author, Date createdDate, Date editedDate, Category category, HashSet<Tag> tags){
         this.title=title;
         this.content=content;
@@ -97,6 +107,7 @@ public class Article {
         this.editedDate=editedDate;
         this.category=category;
         this.tags=tags;
+        this.comments=new HashSet<>();
     }
 
     public Article(){    }

@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import softuniBlog.bindingModel.UserEditBindingModel;
 import softuniBlog.entity.Article;
+import softuniBlog.entity.Comment;
 import softuniBlog.entity.Role;
 import softuniBlog.entity.User;
 import softuniBlog.repository.ArticleRepository;
+import softuniBlog.repository.CommentRepository;
 import softuniBlog.repository.RoleRepository;
 import softuniBlog.repository.UserRepository;
 
@@ -38,6 +40,9 @@ public class AdminUserController {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @GetMapping("/")
     @PreAuthorize("isAuthenticated()")
@@ -126,7 +131,14 @@ public class AdminUserController {
         }
         User user = this.userRepository.findOne(id);
 
+        for (Comment comment: user.getComments()){
+            this.commentRepository.delete(comment);
+        }
+
         for(Article article:user.getArticles()){
+            for (Comment comment: article.getComments()){
+                this.commentRepository.delete(comment);
+            }
             this.articleRepository.delete(article);
         }
 
