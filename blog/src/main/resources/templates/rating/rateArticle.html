@@ -1,0 +1,101 @@
+<main>
+    <div class="container body-content">
+        <div class="row">
+            <div class="alert alert-danger" th:if="${errorMessage != null}" align="center" th:text="${errorMessage}"></div>
+            <div class="col-sm-12">
+                <h1 align="center" th:text="'Share your opinion about ' + ${article.title}"></h1>
+
+                <form class="form-horizontal" th:action="@{/article/{id}/rating(id = ${article.id})}" method="POST">
+                    <fieldset>
+
+                        <div class="form-group" >
+                            <div class="col-sm-12 form-inline" align="center">
+                                <div class="col-sm-2 col-sm-offset-1" align="center">
+                                    <label>
+                                        <h2><input type="radio" name="rating" id="optionsRadios1" value="0"/>
+                                            &#x2606;&#x2606;&#x2606;&#x2606;</h2>
+                                    </label>
+                                </div>
+                                <div class="col-sm-2" align="center">
+                                    <label>
+                                        <h2><input type="radio" name="rating" id="optionsRadios2" value="1"/>
+                                            &#x2605;&#x2606;&#x2606;&#x2606;</h2>
+                                    </label>
+                                </div>
+                                <div class="col-sm-2" align="center">
+                                    <label>
+                                        <h2><input type="radio" name="rating" id="optionsRadios3" value="2"/>
+                                            &#x2605;&#x2605;&#x2606;&#x2606;</h2>
+                                    </label>
+                                </div>
+                                <div class="col-sm-2" align="center">
+                                    <label>
+                                        <h2><input type="radio" name="rating" id="optionsRadios4" value="3"/>
+                                            &#x2605;&#x2605;&#x2605;&#x2606;</h2>
+                                    </label>
+                                </div>
+                                <div class="col-sm-2" align="center">
+                                    <label>
+                                        <h2><input type="radio" name="rating" id="optionsRadios5" value="4"/>
+                                            &#x2605;&#x2605;&#x2605;&#x2605;</h2>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div align="center">
+                                <a class="btn btn-default" th:href="@{/}">Cancel</a>
+                                <input type="submit" class="btn btn-primary" value="Submit"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-sm-12">
+                <article>
+                    <header>
+                        <h2 th:text="${article.title}"></h2>
+                    </header>
+                    <p th:text="${article.content}"></p>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <a class="author" th:href="@{/user{id}/articles(id=${article.author.id})}"
+                               th:text="${article.author.fullName}"></a>
+                            <p>
+                                <a class="btn btn-default btn-xs"
+                                   th:each="tag:${article.tags}"
+                                   th:href="@{/tag/{name}(name=${tag.name})}"
+                                   th:text="${tag.name}"></a>
+                            </p>
+                        </div>
+                        <div class="col-sm-2">
+                            <div th:if="${article.creationDate!=article.editedDate}">
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <small class="secondary-label">Last Edited:</small>
+                                    </li>
+                                    <li>
+                                        <small class="secondary-label"
+                                               th:text="${#dates.format(article.editedDate,'HH:mm:ss dd-MM-yyyy')}"></small>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <small class="secondary-label">Created on:</small>
+                                </li>
+                                <li>
+                                    <small class="secondary-label"
+                                           th:text="${#dates.format(article.creationDate,'HH:mm:ss dd-MM-yyyy')}">
+                                    </small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</main>

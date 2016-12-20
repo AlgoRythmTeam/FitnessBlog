@@ -27,12 +27,12 @@ public class Rating {
         this.usersRating.put(user,ratingValue);
         double value=0;
 
-        /**for ( HashMap.Entry<User, Integer> itempair : usersRating.entrySet() ) {
+        for ( HashMap.Entry<User, Integer> itempair : usersRating.entrySet() ) {
 
             Double userValue = Double.parseDouble(itempair.getValue().toString());
             value=value+userValue;
         }
-        value=value/usersRating.size();**/
+        value=value/usersRating.size();
         this.value=value;
     }
 
