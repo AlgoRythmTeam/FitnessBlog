@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import softuniBlog.controller.AppErrorController;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -43,12 +42,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf();
     }
-
-    @Autowired
-    private ErrorAttributes errorAttributes;
-
-    @Bean
-    public AppErrorController appErrorController(){return new AppErrorController(errorAttributes);}
-
-
 }
