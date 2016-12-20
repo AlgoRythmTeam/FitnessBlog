@@ -29,6 +29,8 @@ public class User {
 
     private Set<UserRating> userRatings;
 
+    private UserInfo userData;
+
 
     public User(String email, String fullName, String password) {
         this.email = email;
@@ -129,6 +131,16 @@ public class User {
 
     public void setUserRatings(Set<UserRating> userRatings) {
         this.userRatings = userRatings;
+    }
+
+
+    @OneToOne(mappedBy = "user")
+    public UserInfo getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserInfo userData) {
+        this.userData = userData;
     }
 
 
