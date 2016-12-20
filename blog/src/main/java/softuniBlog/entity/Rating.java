@@ -4,6 +4,7 @@ package softuniBlog.entity;
 import javax.persistence.*;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,27 +15,15 @@ public class Rating {
 
     private Article article;
 
-    private HashMap<User, Integer> usersRating;
-
-    private double value;
-
+    private Set<UserRating> userRatings;
 
     public Rating(){ }
 
-    public Rating(User user, Integer ratingValue) {
-
-        this.usersRating= new HashMap<>();
-        this.usersRating.put(user,ratingValue);
-        double value=0;
-
-        for ( HashMap.Entry<User, Integer> itempair : usersRating.entrySet() ) {
-
-            Double userValue = Double.parseDouble(itempair.getValue().toString());
-            value=value+userValue;
-        }
-        value=value/usersRating.size();
-        this.value=value;
+    public Rating(Article article){
+        this.article=article;
+        this.userRatings=new HashSet<>();
     }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,19 +45,12 @@ public class Rating {
         this.article = article;
     }
 
-    public HashMap<User, Integer> getUsersRating() {
-        return usersRating;
+    @OneToMany(mappedBy = "rating")
+    public Set<UserRating> getUserRatings() {
+        return userRatings;
     }
 
-    public void setUsersRating(HashMap<User, Integer> usersRating) {
-        this.usersRating = usersRating;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
+    public void setUserRatings(Set<UserRating> userRatings) {
+        this.userRatings = userRatings;
     }
 }

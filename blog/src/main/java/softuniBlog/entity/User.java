@@ -27,6 +27,8 @@ public class User {
 
     private Set<Workout> workouts;
 
+    private Set<UserRating> userRatings;
+
 
     public User(String email, String fullName, String password) {
         this.email = email;
@@ -37,6 +39,7 @@ public class User {
         this.articles = new HashSet<>();
         this.comments=new HashSet<>();
         this.workouts=new HashSet<>();
+        this.userRatings=new HashSet<>();
     }
 
     public User() {    }
@@ -118,6 +121,16 @@ public class User {
     public void setWorkouts(Set<Workout> workout) {
         this.workouts = workout;
     }
+
+    @OneToMany(mappedBy = "ratingAuthor")
+    public Set<UserRating> getUserRatings() {
+        return userRatings;
+    }
+
+    public void setUserRatings(Set<UserRating> userRatings) {
+        this.userRatings = userRatings;
+    }
+
 
     @Transient
     public boolean isAdmin(){

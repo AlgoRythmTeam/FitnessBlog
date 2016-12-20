@@ -120,7 +120,6 @@ public class ArticleController {
             return "redirect:/article/" + id;
         }
 
-
         String tagString=article.getTags().stream().map(Tag::getName).collect(Collectors.joining(", "));
 
         List<Category> categories = this.categoryRepository.findAll();
