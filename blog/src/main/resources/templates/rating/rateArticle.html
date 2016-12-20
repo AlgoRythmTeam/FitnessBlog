@@ -2,9 +2,10 @@
     <div class="container body-content">
         <div class="row">
             <div class="alert alert-danger" th:if="${errorMessage != null}" align="center" th:text="${errorMessage}"></div>
+            <div class="alert alert-danger" th:if="${errorMessage2 != null}" align="center"
+                 th:utext="${errorMessage2}"></div>
             <div class="col-sm-12">
                 <h1 align="center" th:text="'Share your opinion about ' + ${article.title}"></h1>
-
                 <form class="form-horizontal" th:action="@{/article/{id}/rating(id = ${article.id})}" method="POST">
                     <fieldset>
 

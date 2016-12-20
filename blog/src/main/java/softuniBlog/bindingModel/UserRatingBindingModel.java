@@ -1,6 +1,6 @@
 package softuniBlog.bindingModel;
 
-public class RatingBindingModel {
+public class UserRatingBindingModel {
 
     private String rating;
 
