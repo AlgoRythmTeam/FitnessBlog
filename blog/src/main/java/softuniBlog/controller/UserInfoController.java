@@ -10,27 +10,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import softuniBlog.bindingModel.UserInfoBindingModel;
 import softuniBlog.entity.User;
-import softuniBlog.repository.ArticleRepository;
-import softuniBlog.repository.RatingRepository;
-import softuniBlog.repository.UserRatingRepository;
-import softuniBlog.repository.UserRepository;
+import softuniBlog.entity.UserInfo;
+import softuniBlog.repository.*;
 
 @Controller
 public class UserInfoController {
 
     @Autowired
-    private RatingRepository ratingRepository;
-
-    @Autowired
-    private ArticleRepository articleRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private UserRatingRepository userRatingRepository;
+    private UserInfoRepository userInfoRepository;
+
+
 
 
     @GetMapping("/userInfo/dataInput")
@@ -53,5 +49,28 @@ public class UserInfoController {
         return "base-layout";
     }
 
+    @PostMapping("/userInfo/dataInput")
+    @PreAuthorize("isAuthenticated()")
+    public String dataInputProcess(Model model, UserInfoBindingModel userInfoBindingModel) {
 
+            UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            User entityUser = this.userRepository.findByEmail(principal.getUsername());
+
+            boolean sex =userInfoBindingModel.isSex();
+
+        UserInfo userInfoEntity = new UserInfo(
+                userInfoBindingModel.getMass(),
+                userInfoBindingModel.getHeight(),
+                userInfoBindingModel.getAge(),
+                sex,
+                entityUser);
+
+
+        this.userInfoRepository.saveAndFlush(userInfoEntity);
+
+
+        return "redirect:/profile";
+    }
+    
 }
