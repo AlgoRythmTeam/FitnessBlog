@@ -16,6 +16,7 @@ public class Comment {
     private User commentAuthor;
     private Date creationDate;
     private Article article;
+    private Date editedDate;
 
 
     @Id
@@ -75,4 +76,11 @@ public class Comment {
 
     }
 
+    public Date getEditedDate() {
+        return editedDate;
+    }
+
+    public void setEditedDate(Date editedDate) {
+        this.editedDate = editedDate;
+    }
 }

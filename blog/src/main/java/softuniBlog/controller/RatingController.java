@@ -70,20 +70,30 @@ public class RatingController {
 
             for (UserRating currentUserRating : currentUserRatings) {
 
-                if (currentUserRating.getRatingAuthor()==entityUser){
+                if (currentUserRating.getRatingAuthor() == entityUser) {
 
-                    String value=currentUserRating.getRatingValue().toString();
-                    String stars="";
-                    switch (value){
-                        case "0" :  stars="&#x2606;&#x2606;&#x2606;&#x2606;" ; break;
-                        case "1" :  stars="&#x2605;&#x2606;&#x2606;&#x2606;" ; break;
-                        case "2" :  stars="&#x2605;&#x2605;&#x2606;&#x2606;" ; break;
-                        case "3" :  stars="&#x2605;&#x2605;&#x2605;&#x2606;" ; break;
-                        case "4" :  stars="&#x2605;&#x2605;&#x2605;&#x2605;" ; break;
+                    String value = currentUserRating.getRatingValue().toString();
+                    String stars = "";
+                    switch (value) {
+                        case "0":
+                            stars = "&#x2606;&#x2606;&#x2606;&#x2606;";
+                            break;
+                        case "1":
+                            stars = "&#x2605;&#x2606;&#x2606;&#x2606;";
+                            break;
+                        case "2":
+                            stars = "&#x2605;&#x2605;&#x2606;&#x2606;";
+                            break;
+                        case "3":
+                            stars = "&#x2605;&#x2605;&#x2605;&#x2606;";
+                            break;
+                        case "4":
+                            stars = "&#x2605;&#x2605;&#x2605;&#x2605;";
+                            break;
                     }
                     model.addAttribute("errorMessage2",
-                             "You have already rated this article with "
-                                     + " " + stars + " ! If you submit again the old rating would be lost!");
+                            "You have already rated this article with "
+                                    + " " + stars + " ! If you submit again the old rating would be lost!");
                 }
             }
         }
@@ -99,22 +109,19 @@ public class RatingController {
     }
 
 
-
-
-
     @PostMapping("/article/{id}/rating")
     @PreAuthorize("isAuthenticated()")
     public String createProcess(Model model, @PathVariable Integer id, UserRatingBindingModel ratingBindingModel) {
 
 
-   Set<String> expected =new HashSet<String>(Arrays.asList("0", "1", "2","3" ,"4"));
+        Set<String> expected = new HashSet<String>(Arrays.asList("0", "1", "2", "3", "4"));
 
-       // if (!expected.contains(ratingBindingModel.getRating().toString())) {
+        // if (!expected.contains(ratingBindingModel.getRating().toString())) {
 //
-       //     return "redirect:/article/" + id+"ratingError";
-       // }
+        //     return "redirect:/article/" + id+"ratingError";
+        // }
 
-        if ( expected.contains(ratingBindingModel.getRating().toString())) {
+        if (expected.contains(ratingBindingModel.getRating().toString())) {
 
             UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
