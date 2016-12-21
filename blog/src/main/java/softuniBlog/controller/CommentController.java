@@ -94,7 +94,7 @@ public class CommentController {
         }
         Article articleEntity = this.articleRepository.findOne(id);
 
-        Comment commentEntity = new Comment(commentBindingModel.getContent(),userEntity,time,articleEntity);
+        Comment commentEntity = new Comment(commentBindingModel.getContent(),userEntity,time,articleEntity,time);
 
         this.commentRepository.saveAndFlush(commentEntity);
 
@@ -167,5 +167,21 @@ public class CommentController {
         model.addAttribute("comment", comment);
 
         return "base-layout";
+    }
+    @PostMapping("/comment/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String deleteProcess(@PathVariable Integer id) {
+
+        if (!this.commentRepository.exists(id)) {
+            return "redirect:/";
+        }
+
+        Comment comment = this.commentRepository.findOne(id);
+        if (!isUserAuthorOrAdmin(comment)) {
+            return "redirect:/comment/" + id;
+        }
+        this.commentRepository.delete(comment);
+
+        return "redirect:/comment"+ comment.getArticle().getId() + "/comments";
     }
 }
