@@ -61,22 +61,47 @@ public class WorkoutController {
 
         Date time = new Date();
 
-        Workout workoutEntity= new Workout(
-                userEntity,
-                time,
-                workoutBindingModel.getChest(),
-                workoutBindingModel.getAbs(),
-                workoutBindingModel.getBack(),
-                workoutBindingModel.getShoulders(),
-                workoutBindingModel.getBiceps(),
-                workoutBindingModel.getTriceps(),
-                workoutBindingModel.getLegs()
-        );
+        Set<Workout> workouts = userEntity.getWorkouts();
 
-        this.workoutRepository.saveAndFlush(workoutEntity);
+        boolean secondTraining=false;
+
+        for (Workout workout:workouts) {
+
+            if (workout.getTrainingDay().getDay()==time.getDay()){
+                workout.setChest(workout.getChest()+workoutBindingModel.getChest());
+                workout.setAbs(workout.getAbs()+workoutBindingModel.getAbs());
+                workout.setBack(workout.getBack()+workoutBindingModel.getBack());
+                workout.setShoulders(workout.getShoulders()+workoutBindingModel.getShoulders());
+                workout.setBiceps(workout.getBiceps()+workoutBindingModel.getBiceps());
+                workout.setTriceps(workout.getTriceps()+workoutBindingModel.getTriceps());
+                workout.setLegs(workout.getLegs()+workoutBindingModel.getLegs());
+                workout.setTrainingDay(time);
+
+                this.workoutRepository.saveAndFlush(workout);
+
+                secondTraining=true;
+            }
+        }
+
+        if (!secondTraining){
+
+            Workout workoutEntity= new Workout(
+                    userEntity,
+                    time,
+                    workoutBindingModel.getChest(),
+                    workoutBindingModel.getAbs(),
+                    workoutBindingModel.getBack(),
+                    workoutBindingModel.getShoulders(),
+                    workoutBindingModel.getBiceps(),
+                    workoutBindingModel.getTriceps(),
+                    workoutBindingModel.getLegs()
+            );
+
+            this.workoutRepository.saveAndFlush(workoutEntity);
+            
+        }
 
         return "redirect:/workout/data";
-
     }
 
     @GetMapping("/workout/data")
