@@ -1,5 +1,6 @@
 package softuniBlog.controller;
 
+import org.hibernate.annotations.OrderBy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +16,8 @@ import softuniBlog.entity.Workout;
 import softuniBlog.repository.UserRepository;
 import softuniBlog.repository.WorkoutRepository;
 
-import java.util.Date;
-import java.util.Set;
+import java.sql.Array;
+import java.util.*;
 
 /**
  * Created by admin on 17-Dec-16.
@@ -74,7 +75,36 @@ public class WorkoutController {
 
         this.workoutRepository.saveAndFlush(workoutEntity);
 
-        return "redirect:/profile";
+        return "redirect:/workout/data";
 
     }
+
+    @GetMapping("/workout/data")
+    @PreAuthorize("isAuthenticated()")
+    public String details(Model model) {
+
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User userEntity = this.userRepository.findByEmail(principal.getUsername());
+
+        model.addAttribute("user", userEntity);
+
+        Set<Workout> workouts = userEntity.getWorkouts();
+
+        List<Workout> workoutsList =new ArrayList<>();
+
+        for (Workout workout:workouts) {
+
+            workoutsList.add(workout);
+        }
+
+        workoutsList.sort((w1,w2)-> w2.getTrainingDay().getDate() - w1.getTrainingDay().getDate());
+
+        model.addAttribute("workouts", workoutsList);
+
+        model.addAttribute("view", "workout/workoutList");
+
+        return "base-layout";
+    }
+
 }
