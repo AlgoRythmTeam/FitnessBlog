@@ -109,13 +109,17 @@ public class RatingController {
     }
 
 
+
     @PostMapping("/article/rating/{id}")
+
     @PreAuthorize("isAuthenticated()")
     public String createProcess(Model model, @PathVariable Integer id, UserRatingBindingModel ratingBindingModel) {
 
         Set<String> expected = new HashSet<>(Arrays.asList("0", "1", "2", "3", "4"));
 
+
         if (expected.contains(ratingBindingModel.getRating())) {
+
 
             UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

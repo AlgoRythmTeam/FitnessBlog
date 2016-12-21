@@ -15,7 +15,8 @@
 
                         <div class="row">
                             <div class="col-sm-8">
-                                <small class="author" th:text="${article.author.fullName}"></small>
+                                <a class="author"  th:href="@{/user{id}/articles(id=${article.author.id})}"
+                                   th:text="${article.author.fullName}"></a>
                                 <p>
                                     <a class="btn btn-default btn-xs" th:each="tag:${article.tags}"
                                        th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>

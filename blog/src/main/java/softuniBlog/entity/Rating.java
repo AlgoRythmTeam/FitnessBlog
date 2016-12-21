@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="ratings")
+@Table(name = "ratings")
 public class Rating {
 
     private Integer id;
@@ -17,11 +17,12 @@ public class Rating {
 
     private Set<UserRating> userRatings;
 
-    public Rating(){ }
+    public Rating() {
+    }
 
-    public Rating(Article article){
-        this.article=article;
-        this.userRatings=new HashSet<>();
+    public Rating(Article article) {
+        this.article = article;
+        this.userRatings = new HashSet<>();
     }
 
 

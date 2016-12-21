@@ -153,4 +153,7 @@ public class User {
         return Objects.equals(this.getId(),article.getAuthor().getId());
     }
 
+    @Transient
+    public boolean isCommentAuthor(Comment comment){return Objects.equals(this.getId(),comment.getCommentAuthor().getId()); }
+
 }

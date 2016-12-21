@@ -121,7 +121,7 @@ public class CategoryController {
         }
 
         Category category=this.categoryRepository.findOne(id);
-        
+
         for (Article article : category.getArticles()){
             for (Comment comment: article.getComments()){
                 this.commentRepository.delete(comment);

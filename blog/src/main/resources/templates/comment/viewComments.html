@@ -7,17 +7,31 @@
             <th:block th:each="comment : ${article.comments}">
 
                 <div class="panel panel-primary">
-                    <div class="panel-heading">
+                    <div class="panel-heading" th:if="${article.creationDate!=article.editedDate}">
+                        <h3 class="panel-title"
+                            th:text="${'Posted by: '+ comment.commentAuthor.fullName +
+                             '  Posted on: '
+                              + #dates.format(comment.creationDate, 'dd-MM-yyyy')+ #dates.format(comment.editedDate, 'dd-MM-yyyy')}">
+                            </h3>
+                    </div>
+                    <div class="panel-heading" th:if="${article.creationDate==article.editedDate}">
                         <h3 class="panel-title"
                             th:text="${'Posted by: '+ comment.commentAuthor.fullName +
                              '  Posted on: '
                               + #dates.format(comment.creationDate, 'dd-MM-yyyy')}">
-                            </h3>
+                        </h3>
+                        <div class="col-sm-6">
+                          <div class="pull-right">
+                                <th:block sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isCommentAuthor(comment)}">
+                                    <a class="btn btn-success btn-xs" th:href="@{/comment/edit/{id}(id = ${comment.id})}">Edit</a>
+                                    <a class="btn btn-danger btn-xs" th:href="@{/comment/delete/{id}(id = ${comment.id})}">Delete</a>
+                                </th:block>
+                            </div>
                     </div>
                     <div class="panel-body" th:text="${comment.content}">
                     </div>
                 </div>
-
+                </div>
             </th:block>
 
             <footer>
