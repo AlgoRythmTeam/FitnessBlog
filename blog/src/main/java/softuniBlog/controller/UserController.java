@@ -15,6 +15,7 @@ import softuniBlog.bindingModel.UserBindingModel;
 import softuniBlog.entity.Article;
 import softuniBlog.entity.Role;
 import softuniBlog.entity.User;
+import softuniBlog.entity.UserInfo;
 import softuniBlog.repository.ArticleRepository;
 import softuniBlog.repository.RoleRepository;
 import softuniBlog.repository.UserRepository;
@@ -97,9 +98,22 @@ public class UserController {
         User user = this.userRepository.findByEmail(principal.getUsername());
         Set<Article> articles = user.getArticles();
 
+        UserInfo userInfo=user.getUserData();
+
         model.addAttribute("user", user);
         model.addAttribute("view", "user/profile");
         model.addAttribute("articles", articles);
+
+        if (userInfo!=null){
+
+            model.addAttribute("userInfo",userInfo);
+
+        } else {
+
+
+
+        }
+
 
         return "base-layout";
     }

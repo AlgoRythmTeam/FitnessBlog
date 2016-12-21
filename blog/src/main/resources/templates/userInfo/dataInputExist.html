@@ -9,8 +9,8 @@
                     <div class="form-group">
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="user_mass">Body mass</label>
-                            <div class="col-sm-4 ">
-                                <input type="number" min="0" class="form-control" id="user_mass" placeholder="Enter your mass here"
+                            <div class="col-sm-4">
+                                <input type="number" min="0" class="form-control" id="user_mass" th:value="${userInfo.mass}"
                                        name="mass" required="required"/>
                             </div>
                         </div>
@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="user_age">Age</label>
                             <div class="col-sm-4 ">
-                                <input type="number" min="0" class="form-control" id="user_age" placeholder="Enter your age here"
+                                <input type="number" min="0" class="form-control" id="user_age" th:value="${userInfo.age}"
                                        name="age" required="required"/>
                             </div>
                         </div>
@@ -26,27 +26,25 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="user_height">Body height</label>
                             <div class="col-sm-4 ">
-                                <input type="number" min="0" class="form-control" id="user_height" placeholder="Enter your height here"
+                                <input type="number" min="0" class="form-control" id="user_height" th:value="${userInfo.height}"
                                        name="height" required="required"/>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="user_sex">Sex</label>
                             <div class="col-sm-4">
-                                <select class="form-control" id="user_sex" name="sex" required="required">
-                                    <option value="true">Male</option>
-                                    <option value="false">Female</option>
+                                <select class="form-control" id="user_sex" name="sex"
+                                        required="required">
+                                    <option value="true" th:selected="${userInfo.sex==true}">Male</option>
+                                    <option value="false" th:selected="${userInfo.sex==false}">Female</option>
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-sm-4 col-sm-offset-4">
                             <a class="btn btn-default" th:href="@{/}">Cancel</a>
                             <input type="submit" class="btn btn-primary" value="Submit"/>
                         </div>
                     </div>
-
                 </fieldset>
             </form>
         </div>

@@ -1,6 +1,16 @@
 <main>
     <div class="container body-container">
         <div class="row">
+            <div th:if="${userInfo}" align="center">
+                <h4 th:text="${'Based on your body data our recommendation is: ' + userInfo.recommendation}"></h4>
+            </div>
+            <div th:unless="${userInfo}" align="center">
+                <a class="btn btn-info "
+                   th:href="@{/userInfo/dataInput}">Enter User Information to get recommendations.</a>
+            </div>
+
+        </div>
+        <div class="row">
             <div id="main" class="col-sm-9">
                 <div>
                     <span th:text="${user.email}"></span>
@@ -14,8 +24,8 @@
                        th:text="${'My articles (' + #sets.size(articles) + ')'}">
                     </a>
                 </h3>
-
             </div>
         </div>
+
     </div>
 </main>

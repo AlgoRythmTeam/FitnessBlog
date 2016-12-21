@@ -27,37 +27,47 @@ public class UserInfoController {
     private UserInfoRepository userInfoRepository;
 
 
-
-
     @GetMapping("/userInfo/dataInput")
     @PreAuthorize("isAuthenticated()")
     public String dataInput(Model model) {
 
-        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User entityUser = this.userRepository.findByEmail(principal.getUsername());
 
-            User entityUser = this.userRepository.findByEmail(principal.getUsername());
+        model.addAttribute("user", entityUser);
 
-            model.addAttribute("user", entityUser);
+        UserInfo userInfo=entityUser.getUserData();
+
+        if (userInfo!=null){
+
+            model.addAttribute("userInfo", userInfo);
+
+            model.addAttribute("view", "userInfo/dataInputExist");
+        } else {
+            model.addAttribute("view", "userInfo/dataInput");
         }
 
-
-        model.addAttribute("view", "userInfo/dataInput");
-
-
         return "base-layout";
+
     }
 
     @PostMapping("/userInfo/dataInput")
     @PreAuthorize("isAuthenticated()")
     public String dataInputProcess(Model model, UserInfoBindingModel userInfoBindingModel) {
 
-            UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            User entityUser = this.userRepository.findByEmail(principal.getUsername());
+        User entityUser = this.userRepository.findByEmail(principal.getUsername());
 
-            boolean sex =userInfoBindingModel.isSex();
+        boolean sex = userInfoBindingModel.isSex();
+
+        UserInfo userInfo=entityUser.getUserData();
+
+        if (userInfo!=null){
+
+            this.userInfoRepository.delete(userInfo);
+        }
 
         UserInfo userInfoEntity = new UserInfo(
                 userInfoBindingModel.getMass(),
@@ -66,11 +76,9 @@ public class UserInfoController {
                 sex,
                 entityUser);
 
-
         this.userInfoRepository.saveAndFlush(userInfoEntity);
-
 
         return "redirect:/profile";
     }
-    
+
 }

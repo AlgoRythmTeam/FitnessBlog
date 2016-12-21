@@ -77,9 +77,50 @@ public class UserInfo {
         return user;
     }
 
-
     public void setUser(User infoHolder) {
         this.user = infoHolder;
     }
+
+
+    @Transient
+    public String getRecommendation(){
+
+       Integer coefficient = this.height-this.mass;
+
+
+        if (this.Age<10){
+
+           return "You are too young for fitness, go to play outside!" ;
+        }
+        else if (this.Age>60) {
+           return "You are too old for fitness, go walk in the park!" ;
+        }
+        else {
+            if (this.Sex==true) {
+                if (coefficient<100) {
+                   return "You must do swimming and jogging." ;
+                }
+                else {
+                    return "You must train bodybuilding." ;
+                }
+            }
+            else {
+                if (coefficient<110)
+                {
+                    return  "You must do Zumba and Yoga." ;
+                }
+                else
+                {
+                    return "You must praktice street fitness." ;
+                }
+            }
+        }
+
+
+
+    }
+
+
+
 
 }
