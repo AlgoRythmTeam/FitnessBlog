@@ -98,7 +98,7 @@ public class WorkoutController {
             );
 
             this.workoutRepository.saveAndFlush(workoutEntity);
-            
+
         }
 
         return "redirect:/workout/data";
@@ -116,18 +116,48 @@ public class WorkoutController {
 
         Set<Workout> workouts = userEntity.getWorkouts();
 
-        List<Workout> workoutsList =new ArrayList<>();
+         List<Workout> workoutsList =new ArrayList<>();
+
+        Date time = new Date();
+
+        Workout workoutSum=new Workout(
+                userEntity,
+                time,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+        );
+
+
+
 
         for (Workout workout:workouts) {
 
             workoutsList.add(workout);
+
+            workoutSum.setChest(workoutSum.getChest()+workout.getChest());
+            workoutSum.setAbs(workoutSum.getAbs()+workout.getAbs());
+            workoutSum.setBack(workoutSum.getBack()+workout.getBack());
+            workoutSum.setShoulders(workoutSum.getShoulders()+workout.getShoulders());
+            workoutSum.setBiceps(workoutSum.getBiceps()+workout.getBiceps());
+            workoutSum.setTriceps(workoutSum.getTriceps()+workout.getTriceps());
+            workoutSum.setLegs(workoutSum.getLegs()+workout.getLegs());
         }
+
 
         workoutsList.sort((w1,w2)-> w2.getTrainingDay().getDate() - w1.getTrainingDay().getDate());
 
         model.addAttribute("workouts", workoutsList);
 
+        model.addAttribute("workoutSum", workoutSum);
+
         model.addAttribute("view", "workout/workoutList");
+
+
 
         return "base-layout";
     }
