@@ -1,0 +1,55 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <div>
+                <h2 align="center" th:text=" 'Hello '+ ${user.fullName} "></h2>
+            </div>
+            <form class="form-horizontal" th:action="@{/userInfo/dataInput}" method="POST">
+                <fieldset>
+                    <div class="form-group">
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="user_mass">Body mass</label>
+                            <div class="col-sm-4 ">
+                                <input type="text" class="form-control" id="user_mass" placeholder="Eneter your mass here"
+                                       name="mass" required="required"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="user_age">Age</label>
+                            <div class="col-sm-4 ">
+                                <input type="text" class="form-control" id="user_age" placeholder="Eneter your age here"
+                                       name="age" required="required"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="user_height">Body height</label>
+                            <div class="col-sm-4 ">
+                                <input type="text" class="form-control" id="user_height" placeholder="Eneter your height here"
+                                       name="height" required="required"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="user_sex">Sex</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="user_sex" name="sex" required="required">
+                                    <option value="true">Male</option>
+                                    <option value="false">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/}">Cancel</a>
+                            <input type="submit" class="btn btn-primary" value="Submit"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>
+

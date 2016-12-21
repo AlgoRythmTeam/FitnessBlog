@@ -18,6 +18,7 @@ public class UserInfo {
 
     private User user;
 
+    public UserInfo() {}
 
     public UserInfo(Integer mass, Integer height, Integer age, boolean sex, User user) {
         this.mass = mass;

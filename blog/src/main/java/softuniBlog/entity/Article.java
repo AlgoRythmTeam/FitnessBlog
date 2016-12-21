@@ -121,6 +121,15 @@ public class Article {
     }
 
 
+    public Date getEditedDate() {
+        return editedDate;
+    }
+
+    public void setEditedDate(Date editedDate) {
+        this.editedDate = editedDate;
+    }
+
+
     @Transient
     public String getSummary(){
         return this.getContent().substring(0,1 + this.getContent().length()/5) + "...";
@@ -136,11 +145,5 @@ public class Article {
             return this.getTitle();
     }
 
-    public Date getEditedDate() {
-        return editedDate;
-    }
 
-    public void setEditedDate(Date editedDate) {
-        this.editedDate = editedDate;
-    }
 }

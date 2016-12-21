@@ -103,10 +103,37 @@ public class ArticleController {
 
         Article article = this.articleRepository.findOne(id);
 
+        Rating rating = article.getRating();
+
+        if (rating.getRatingSize()>0){
+             String userOrUsers=rating.getRatingSize()==1?"user":"users";
+            String stars=GetStars(rating);
+            model.addAttribute("stars",stars);
+            model.addAttribute("ratingUsers",userOrUsers);
+        }
+
         model.addAttribute("article", article);
         model.addAttribute("view", "article/details");
+        model.addAttribute("rating", rating);
 
         return "base-layout";
+    }
+
+    private String GetStars(Rating rating) {
+        Integer rSize=rating.getRatingSize();
+
+            double rValue=rating.getArticleRating();
+            if (rValue<0.5){
+                return "&#x2606;&#x2606;&#x2606;&#x2606;";
+            } else if (rValue<1.5){
+                return "&#x2605;&#x2606;&#x2606;&#x2606;";
+            } else if (rValue<2.5){
+                return "&#x2605;&#x2605;&#x2606;&#x2606;";
+            } else if (rValue<3.5){
+                return "&#x2605;&#x2605;&#x2605;&#x2606;";
+            } else {
+                return "&#x2605;&#x2605;&#x2605;&#x2605;";
+            }
     }
 
 

@@ -54,4 +54,29 @@ public class Rating {
     public void setUserRatings(Set<UserRating> userRatings) {
         this.userRatings = userRatings;
     }
+
+    @Transient
+    public Double getArticleRating(){
+
+        if (this.userRatings.size()==0){
+            return -1.0;
+        } else {
+
+            Double estimatedValue=0.0;
+            for (UserRating userRating: this.userRatings) {
+               estimatedValue+= userRating.getRatingValue();
+            }
+            estimatedValue=estimatedValue/this.userRatings.size();
+            return Math.round(estimatedValue*100)/100.0 ;
+        }
+    }
+
+    @Transient
+    public Integer getRatingSize(){
+
+            return this.userRatings.size();
+
+    }
+
+
 }
