@@ -1,39 +1,36 @@
 <main>
     <div class="container body-content span=8 offset=2">
-
             <h2 align="center">
                 Comments
             </h2>
             <th:block th:each="comment : ${article.comments}">
-
                 <div class="panel panel-primary">
-                    <div class="panel-heading" th:if="${article.creationDate!=article.editedDate}">
+                    <div class="panel-heading" >
+                        <div th:if="${comment.creationDate!=comment.editedDate}">
                         <h3 class="panel-title"
                             th:text="${'Posted by: '+ comment.commentAuthor.fullName +
                              '  Posted on: '
-                              + #dates.format(comment.creationDate, 'dd-MM-yyyy')+ #dates.format(comment.editedDate, 'dd-MM-yyyy')}">
+                              + #dates.format(comment.creationDate, 'dd-MM-yyyy HH:mm:ss')+ ' Edited on: '+ #dates.format(comment.editedDate, 'dd-MM-yyyy HH:mm:ss')}">
                             </h3>
-                    </div>
-                    <div class="panel-heading" th:if="${article.creationDate==article.editedDate}">
+                        </div>
+                        <div th:if="${comment.creationDate==comment.editedDate}">
                         <h3 class="panel-title"
                             th:text="${'Posted by: '+ comment.commentAuthor.fullName +
                              '  Posted on: '
-                              + #dates.format(comment.creationDate, 'dd-MM-yyyy')}">
+                              + #dates.format(comment.creationDate, 'dd-MM-yyyy HH:mm:ss')}">
                         </h3>
-                        <div class="col-sm-6">
+                        </div>
                           <div class="pull-right">
                                 <th:block sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isCommentAuthor(comment)}">
                                     <a class="btn btn-success btn-xs" th:href="@{/comment/edit/{id}(id = ${comment.id})}">Edit</a>
                                     <a class="btn btn-danger btn-xs" th:href="@{/comment/delete/{id}(id = ${comment.id})}">Delete</a>
                                 </th:block>
-                            </div>
+                          </div>
                     </div>
                     <div class="panel-body" th:text="${comment.content}">
                     </div>
                 </div>
-                </div>
             </th:block>
-
             <footer>
                 <div align="center">
                     <a class="btn btn-info btn-lg" th:href="@{/comment/create/{id}(id = ${article.id})}">Add Comment</a>

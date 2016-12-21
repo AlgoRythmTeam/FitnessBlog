@@ -68,11 +68,12 @@ public class Comment {
 
     public Comment () {};
 
-    public Comment(String content, User commentAuthor, Date createddate, Article article) {
+    public Comment(String content, User commentAuthor, Date createddate, Article article,  Date editedDate) {
         this.content = content;
         this.commentAuthor = commentAuthor;
         this.creationDate = createddate;
         this.article = article;
+        this.editedDate=editedDate;
 
     }
 

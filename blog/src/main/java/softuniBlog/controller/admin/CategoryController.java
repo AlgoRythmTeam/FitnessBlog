@@ -10,12 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import softuniBlog.bindingModel.CategoryBindingModel;
-import softuniBlog.entity.Article;
-import softuniBlog.entity.Category;
-import softuniBlog.entity.Comment;
-import softuniBlog.repository.ArticleRepository;
-import softuniBlog.repository.CategoryRepository;
-import softuniBlog.repository.CommentRepository;
+import softuniBlog.entity.*;
+import softuniBlog.repository.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -34,6 +30,12 @@ public class CategoryController {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private UserRatingRepository userRatingRepository;
+
+    @Autowired
+    private RatingRepository ratingRepository;
 
     @GetMapping("/")
     public String list(Model model) {
@@ -123,9 +125,21 @@ public class CategoryController {
         Category category=this.categoryRepository.findOne(id);
 
         for (Article article : category.getArticles()){
+
             for (Comment comment: article.getComments()){
                 this.commentRepository.delete(comment);
             }
+
+            Rating rating = article.getRating();
+
+            for (UserRating userRating : rating.getUserRatings()) {
+
+                this.userRatingRepository.delete(userRating);
+            }
+
+            this.ratingRepository.delete(rating);
+
+
             this.articleRepository.delete(article);
         }
 
