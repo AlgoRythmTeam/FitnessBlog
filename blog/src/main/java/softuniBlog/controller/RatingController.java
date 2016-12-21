@@ -43,7 +43,7 @@ public class RatingController {
     private UserRatingRepository userRatingRepository;
 
 
-    @GetMapping("/article/{id}/rating")
+    @GetMapping("/article/rating/{id}")
     @PreAuthorize("isAuthenticated()")
     public String create(Model model, @PathVariable Integer id, @RequestParam(required = false) String errorMes) {
         if (!this.articleRepository.exists(id)) {
@@ -54,39 +54,49 @@ public class RatingController {
 
         model.addAttribute("article", article);
 
-        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User entityUser = this.userRepository.findByEmail(principal.getUsername());
 
-            User entityUser = this.userRepository.findByEmail(principal.getUsername());
-
-            model.addAttribute("user", entityUser);
+        model.addAttribute("user", entityUser);
 
 
-            Rating currentRating = article.getRating();
+        Rating currentRating = article.getRating();
 
+        if (currentRating != null) {
 
             Set<UserRating> currentUserRatings = currentRating.getUserRatings();
 
             for (UserRating currentUserRating : currentUserRatings) {
 
-                if (currentUserRating.getRatingAuthor()==entityUser){
+                if (currentUserRating.getRatingAuthor() == entityUser) {
 
-                    String value=currentUserRating.getRatingValue().toString();
-                    String stars="";
-                    switch (value){
-                        case "0" :  stars="&#x2606;&#x2606;&#x2606;&#x2606;" ; break;
-                        case "1" :  stars="&#x2605;&#x2606;&#x2606;&#x2606;" ; break;
-                        case "2" :  stars="&#x2605;&#x2605;&#x2606;&#x2606;" ; break;
-                        case "3" :  stars="&#x2605;&#x2605;&#x2605;&#x2606;" ; break;
-                        case "4" :  stars="&#x2605;&#x2605;&#x2605;&#x2605;" ; break;
+                    String value = currentUserRating.getRatingValue().toString();
+                    String stars = "";
+                    switch (value) {
+                        case "0":
+                            stars = "&#x2606;&#x2606;&#x2606;&#x2606;";
+                            break;
+                        case "1":
+                            stars = "&#x2605;&#x2606;&#x2606;&#x2606;";
+                            break;
+                        case "2":
+                            stars = "&#x2605;&#x2605;&#x2606;&#x2606;";
+                            break;
+                        case "3":
+                            stars = "&#x2605;&#x2605;&#x2605;&#x2606;";
+                            break;
+                        case "4":
+                            stars = "&#x2605;&#x2605;&#x2605;&#x2605;";
+                            break;
                     }
                     model.addAttribute("errorMessage2",
-                             "You have already rated this article with "
-                                     + " " + stars + " ! If you submit again the old rating would be lost!");
+                            "You have already rated this article with "
+                                    + " " + stars + " ! If you submit again the old rating would be lost!");
                 }
             }
         }
+
 
         if (errorMes != null) {
             model.addAttribute("errorMessage", "Please choose a rating before submission !");
@@ -99,22 +109,13 @@ public class RatingController {
     }
 
 
-
-
-
-    @PostMapping("/article/{id}/rating")
+    @PostMapping("/article/rating/{id}")
     @PreAuthorize("isAuthenticated()")
     public String createProcess(Model model, @PathVariable Integer id, UserRatingBindingModel ratingBindingModel) {
 
+        Set<String> expected = new HashSet<>(Arrays.asList("0", "1", "2", "3", "4"));
 
-   Set<String> expected =new HashSet<String>(Arrays.asList("0", "1", "2","3" ,"4"));
-
-       // if (!expected.contains(ratingBindingModel.getRating().toString())) {
-//
-       //     return "redirect:/article/" + id+"ratingError";
-       // }
-
-        if ( expected.contains(ratingBindingModel.getRating().toString())) {
+        if (expected.contains(ratingBindingModel.getRating())) {
 
             UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -126,28 +127,51 @@ public class RatingController {
 
             Date time = new Date();
 
-            Rating rating = new Rating(article);
+            Rating currentRating = article.getRating();
 
-            this.ratingRepository.saveAndFlush(rating);
+            if (currentRating != null) {
+                Set<UserRating> currentUserRatings = currentRating.getUserRatings();
+                for (UserRating currentUserRating : currentUserRatings) {
+                    if (currentUserRating.getRatingAuthor() == entityUser) {
+
+                        this.userRatingRepository.delete(currentUserRating);
+                    }
+                        UserRating userRatingEntity = new UserRating(entityUser, time, ratingValue, currentRating);
+                        this.userRatingRepository.saveAndFlush(userRatingEntity);
+                }  } else {
+
+                Rating rating = new Rating(article);
+
+                this.ratingRepository.saveAndFlush(rating);
 
 
-            UserRating userRatingEntity = new UserRating(entityUser, time, ratingValue, rating);
+                UserRating userRatingEntity = new UserRating(entityUser, time, ratingValue, rating);
 
-            this.userRatingRepository.saveAndFlush(userRatingEntity);
+                this.userRatingRepository.saveAndFlush(userRatingEntity);
+
+            }
+
+            return "redirect:/article/" + id;
+
+        } else {
+
+            return "redirect:/article/ratingError/" + id;
 
         }
-        return "redirect:/article/" + id;
+
     }
 
-
-    @GetMapping("/article/{id}/ratingError")
+    @GetMapping("/article/ratingError/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String ratingError1(Model model, @PathVariable Integer id, String errorMes) {
+    public String ratingError1(Model model, @PathVariable Integer id) {
 
         if (!this.articleRepository.exists(id)) {
             return "redirect:/";
         }
 
+        Article article = this.articleRepository.findOne(id);
+
+        model.addAttribute("article", article);
 
         model.addAttribute("view", "rating/error");
 
