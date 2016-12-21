@@ -149,4 +149,23 @@ public class CommentController {
 
         return "redirect:/comment"+ comment.getArticle().getId() + "/comments";
     }
+
+    @GetMapping("/comment/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String delete(Model model, @PathVariable Integer id) {
+        if (!this.commentRepository.exists(id)) {
+            return "redirect:/";
+        }
+
+        Comment comment = this.commentRepository.findOne(id);
+
+        if (!isUserAuthorOrAdmin(comment)) {
+            return "redirect:/comment/" + id;
+        }
+
+        model.addAttribute("view", "comment/delete");
+        model.addAttribute("comment", comment);
+
+        return "base-layout";
+    }
 }
