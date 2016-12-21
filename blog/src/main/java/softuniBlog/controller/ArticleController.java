@@ -40,6 +40,9 @@ public class ArticleController {
     private RatingRepository ratingRepository;
 
     @Autowired
+    private UserRatingRepository userRatingRepository;
+
+    @Autowired
     private CommentRepository commentRepository;
 
     @GetMapping("/article/create")
@@ -107,18 +110,23 @@ public class ArticleController {
 
         if (rating != null) {
 
-            Integer newRating=1;
-
-            model.addAttribute("newRating", newRating);
+            Integer newRating = 1;
 
             if (rating.getRatingSize() > 0) {
+
+                model.addAttribute("newRating", newRating);
                 String userOrUsers = rating.getRatingSize() == 1 ? "user" : "users";
                 String stars = GetStars(rating);
                 model.addAttribute("stars", stars);
                 model.addAttribute("ratingUsers", userOrUsers);
+
+            } else {
+
+                newRating = -2;
+                model.addAttribute("newRating", newRating);
             }
         } else {
-            Integer newRating=-2;
+            Integer newRating = -2;
             model.addAttribute("newRating", newRating);
         }
 
@@ -228,6 +236,15 @@ public class ArticleController {
             return "redirect:/";
         }
         Article article = this.articleRepository.findOne(id);
+
+        Rating rating = article.getRating();
+
+        for (UserRating userRating : rating.getUserRatings()) {
+
+            this.userRatingRepository.delete(userRating);
+        }
+
+        this.ratingRepository.delete(rating);
 
         for (Comment comment : article.getComments()) {
             this.commentRepository.delete(comment);

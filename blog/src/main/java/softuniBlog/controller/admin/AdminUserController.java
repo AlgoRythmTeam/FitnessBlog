@@ -15,14 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import softuniBlog.bindingModel.UserEditBindingModel;
-import softuniBlog.entity.Article;
-import softuniBlog.entity.Comment;
-import softuniBlog.entity.Role;
-import softuniBlog.entity.User;
-import softuniBlog.repository.ArticleRepository;
-import softuniBlog.repository.CommentRepository;
-import softuniBlog.repository.RoleRepository;
-import softuniBlog.repository.UserRepository;
+import softuniBlog.bindingModel.UserRatingBindingModel;
+import softuniBlog.entity.*;
+import softuniBlog.repository.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -43,6 +38,12 @@ public class AdminUserController {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private UserRatingRepository userRatingRepository;
+
+    @Autowired
+    private RatingRepository ratingRepository;
 
     @GetMapping("/")
     @PreAuthorize("isAuthenticated()")
@@ -115,12 +116,8 @@ public class AdminUserController {
             return "redirect:/admin/users/";
         }
         User user = this.userRepository.findOne(id);
-
         model.addAttribute("user", user);
         model.addAttribute("view", "admin/user/delete");
-
-
-
         return "base-layout";
     }
 
@@ -131,6 +128,24 @@ public class AdminUserController {
         }
         User user = this.userRepository.findOne(id);
 
+
+
+        for (UserRating userRating: user.getUserRatings()){
+
+            Rating currentRating=userRating.getRating();
+            boolean checkIfRatingEmpty=false;
+
+            if (currentRating.getRatingSize()==1){
+                checkIfRatingEmpty=true;
+            }
+            this.userRatingRepository.delete(userRating);
+
+            if (checkIfRatingEmpty){
+                this.ratingRepository.delete(currentRating);
+            }
+        }
+
+
         for (Comment comment: user.getComments()){
             this.commentRepository.delete(comment);
         }
@@ -139,6 +154,15 @@ public class AdminUserController {
             for (Comment comment: article.getComments()){
                 this.commentRepository.delete(comment);
             }
+
+            for (UserRating userRating: article.getRating().getUserRatings()){
+                this.userRatingRepository.delete(userRating);
+            }
+
+            Rating articleRating=article.getRating();
+
+            this.ratingRepository.delete(articleRating);
+
             this.articleRepository.delete(article);
         }
 
