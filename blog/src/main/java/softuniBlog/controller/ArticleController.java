@@ -66,7 +66,7 @@ public class ArticleController {
 
         Category category = this.categoryRepository.findOne(articleBindingModel.getCategoryId());
 
-        HashSet<Tag> tags=this.findTagsFromString(articleBindingModel.getTagString());
+        HashSet<Tag> tags = this.findTagsFromString(articleBindingModel.getTagString());
 
         Article articleEntity = new Article(
                 articleBindingModel.getTitle(),
@@ -105,11 +105,21 @@ public class ArticleController {
 
         Rating rating = article.getRating();
 
-        if (rating.getRatingSize()>0){
-             String userOrUsers=rating.getRatingSize()==1?"user":"users";
-            String stars=GetStars(rating);
-            model.addAttribute("stars",stars);
-            model.addAttribute("ratingUsers",userOrUsers);
+        if (rating != null) {
+
+            Integer newRating=1;
+
+            model.addAttribute("newRating", newRating);
+
+            if (rating.getRatingSize() > 0) {
+                String userOrUsers = rating.getRatingSize() == 1 ? "user" : "users";
+                String stars = GetStars(rating);
+                model.addAttribute("stars", stars);
+                model.addAttribute("ratingUsers", userOrUsers);
+            }
+        } else {
+            Integer newRating=-2;
+            model.addAttribute("newRating", newRating);
         }
 
         model.addAttribute("article", article);
@@ -120,20 +130,20 @@ public class ArticleController {
     }
 
     private String GetStars(Rating rating) {
-        Integer rSize=rating.getRatingSize();
+        Integer rSize = rating.getRatingSize();
 
-            double rValue=rating.getArticleRating();
-            if (rValue<0.5){
-                return "&#x2606;&#x2606;&#x2606;&#x2606;";
-            } else if (rValue<1.5){
-                return "&#x2605;&#x2606;&#x2606;&#x2606;";
-            } else if (rValue<2.5){
-                return "&#x2605;&#x2605;&#x2606;&#x2606;";
-            } else if (rValue<3.5){
-                return "&#x2605;&#x2605;&#x2605;&#x2606;";
-            } else {
-                return "&#x2605;&#x2605;&#x2605;&#x2605;";
-            }
+        double rValue = rating.getArticleRating();
+        if (rValue < 0.5) {
+            return "&#x2606;&#x2606;&#x2606;&#x2606;";
+        } else if (rValue < 1.5) {
+            return "&#x2605;&#x2606;&#x2606;&#x2606;";
+        } else if (rValue < 2.5) {
+            return "&#x2605;&#x2605;&#x2606;&#x2606;";
+        } else if (rValue < 3.5) {
+            return "&#x2605;&#x2605;&#x2605;&#x2606;";
+        } else {
+            return "&#x2605;&#x2605;&#x2605;&#x2605;";
+        }
     }
 
 
@@ -150,14 +160,14 @@ public class ArticleController {
             return "redirect:/article/" + id;
         }
 
-        String tagString=article.getTags().stream().map(Tag::getName).collect(Collectors.joining(", "));
+        String tagString = article.getTags().stream().map(Tag::getName).collect(Collectors.joining(", "));
 
         List<Category> categories = this.categoryRepository.findAll();
 
         model.addAttribute("view", "article/edit");
         model.addAttribute("article", article);
         model.addAttribute("categories", categories);
-        model.addAttribute("tags",tagString);
+        model.addAttribute("tags", tagString);
 
         return "base-layout";
     }
@@ -178,7 +188,7 @@ public class ArticleController {
 
         Category category = this.categoryRepository.findOne(articleBindingModel.getCategoryId());
 
-        HashSet<Tag> tags=this.findTagsFromString(articleBindingModel.getTagString());
+        HashSet<Tag> tags = this.findTagsFromString(articleBindingModel.getTagString());
 
         article.setCategory(category);
         article.setContent(articleBindingModel.getContent());
@@ -219,7 +229,7 @@ public class ArticleController {
         }
         Article article = this.articleRepository.findOne(id);
 
-        for (Comment comment: article.getComments()){
+        for (Comment comment : article.getComments()) {
             this.commentRepository.delete(comment);
         }
 

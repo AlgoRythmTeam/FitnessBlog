@@ -47,13 +47,12 @@
                     <footer>
                         <div class="row">
                             <div class="col-sm-6">
-                                <div th:if="${rating.ratingSize}==0">
+                                <div th:if="${newRating==-2}">
                                     <a class="btn btn-success"
                                        th:href="@{/article/rating/{id}(id = ${article.id})}">
                                         Be the first to rate this!</a>
                                 </div>
-                                <div th:if="${rating.ratingSize}">
-                                    <h3><a class="btn btn-success"
+                                <div th:if="${newRating==1}"><h3><a class="btn btn-success"
                                        th:href="@{/article/rating/{id}(id = ${article.id})}"
                                     th:utext="${ stars + '&nbsp;&nbsp;&nbsp;'
                                     + rating.articleRating + '&nbsp; from &nbsp; '

@@ -147,7 +147,6 @@ public class CommentController {
 
         this.commentRepository.saveAndFlush(comment);
 
-        return "redirect:/comment/" + comment.getId();
-
+        return "redirect:/comment"+ comment.getArticle().getId() + "/comments";
     }
 }
