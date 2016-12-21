@@ -135,10 +135,10 @@ public class RatingController {
                     if (currentUserRating.getRatingAuthor() == entityUser) {
 
                         this.userRatingRepository.delete(currentUserRating);
-                    }
+                    }}
                         UserRating userRatingEntity = new UserRating(entityUser, time, ratingValue, currentRating);
                         this.userRatingRepository.saveAndFlush(userRatingEntity);
-                }  } else {
+                  } else {
 
                 Rating rating = new Rating(article);
 
