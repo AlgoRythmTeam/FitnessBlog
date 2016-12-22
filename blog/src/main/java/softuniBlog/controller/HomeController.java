@@ -45,6 +45,13 @@ public class HomeController {
         return "base-layout";
     }
 
+    @RequestMapping("/error/internal2")
+    public String passwordMIssmatch(Model model){
+        model.addAttribute("view","error/internal2");
+        return "base-layout";
+    }
+
+
     @RequestMapping("/error/internal/{id}")
     public String sameUserEmail(Model model, @PathVariable Integer id){
         if (!this.userRepository.exists(id)){

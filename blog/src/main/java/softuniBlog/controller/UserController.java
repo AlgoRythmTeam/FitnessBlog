@@ -46,7 +46,7 @@ public class UserController {
 
         if (!userBindingModel.getPassword().equals(userBindingModel.getConfirmPassword())) {
 
-            return "redirect:/register";
+            return "redirect:/error/internal2";
         }
 
 
