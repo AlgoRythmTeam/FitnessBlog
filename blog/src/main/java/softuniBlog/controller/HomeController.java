@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import softuniBlog.entity.Article;
 import softuniBlog.entity.Category;
+import softuniBlog.entity.Rating;
 import softuniBlog.entity.User;
 import softuniBlog.repository.ArticleRepository;
 import softuniBlog.repository.CategoryRepository;
 import softuniBlog.repository.UserRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -79,9 +81,17 @@ public class HomeController {
 
         Set<Article> articles=category.getArticles();
 
+        Set<Rating> ratings=new HashSet<>();
+
+        for (Article article:articles) {
+            ratings.add(article.getRating()) ;
+        }
+
+
         model.addAttribute("view","home/listOfArticles");
         model.addAttribute("articles",articles);
         model.addAttribute("category",category);
+        model.addAttribute("ratings",ratings);
         return "base-layout";
     }
 

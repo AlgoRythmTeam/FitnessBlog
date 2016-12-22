@@ -12,15 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import softuniBlog.bindingModel.UserBindingModel;
-import softuniBlog.entity.Article;
-import softuniBlog.entity.Role;
-import softuniBlog.entity.User;
-import softuniBlog.entity.UserInfo;
+import softuniBlog.entity.*;
 import softuniBlog.repository.ArticleRepository;
 import softuniBlog.repository.RoleRepository;
 import softuniBlog.repository.UserRepository;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
 import java.util.Set;
 
 @Controller
@@ -132,8 +130,15 @@ public class UserController {
         User user = this.userRepository.findById(id);
         Set<Article> articles = user.getArticles();
 
+        Set<Rating> ratings=new HashSet<>();
+
+        for (Article article:articles) {
+            ratings.add(article.getRating()) ;
+        }
+
         model.addAttribute("view", "user/userListOfArticles");
         model.addAttribute("articles", articles);
+        model.addAttribute("ratings", ratings);
         model.addAttribute("user", user);
         return "base-layout";
     }

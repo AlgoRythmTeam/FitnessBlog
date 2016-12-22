@@ -137,21 +137,9 @@ public class ArticleController {
         return "base-layout";
     }
 
-    private String GetStars(Rating rating) {
-        Integer rSize = rating.getRatingSize();
+    public String GetStars(Rating rating) {
 
-        double rValue = rating.getArticleRating();
-        if (rValue < 0.5) {
-            return "&#x2606;&#x2606;&#x2606;&#x2606;";
-        } else if (rValue < 1.5) {
-            return "&#x2605;&#x2606;&#x2606;&#x2606;";
-        } else if (rValue < 2.5) {
-            return "&#x2605;&#x2605;&#x2606;&#x2606;";
-        } else if (rValue < 3.5) {
-            return "&#x2605;&#x2605;&#x2605;&#x2606;";
-        } else {
-            return "&#x2605;&#x2605;&#x2605;&#x2605;";
-        }
+        return rating.getArticleRatingStars();
     }
 
 

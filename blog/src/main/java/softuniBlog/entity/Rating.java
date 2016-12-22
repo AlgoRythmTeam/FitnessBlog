@@ -72,6 +72,34 @@ public class Rating {
     }
 
     @Transient
+    public String getArticleRatingStars(){
+
+        if (this.userRatings.size()>0){
+            Double estimatedValue=0.0;
+            for (UserRating userRating: this.userRatings) {
+                estimatedValue+= userRating.getRatingValue();
+            }
+            estimatedValue=estimatedValue/this.userRatings.size();
+
+            if (estimatedValue < 0.5) {
+                return "&#x2606;&#x2606;&#x2606;&#x2606;";
+            } else if (estimatedValue < 1.5) {
+                return "&#x2605;&#x2606;&#x2606;&#x2606;";
+            } else if (estimatedValue < 2.5) {
+                return "&#x2605;&#x2605;&#x2606;&#x2606;";
+            } else if (estimatedValue < 3.5) {
+                return "&#x2605;&#x2605;&#x2605;&#x2606;";
+            } else {
+                return "&#x2605;&#x2605;&#x2605;&#x2605;";
+            }
+
+        } else {
+                return "No rating yet.";
+        }
+
+    }
+
+    @Transient
     public Integer getRatingSize(){
 
             return this.userRatings.size();
