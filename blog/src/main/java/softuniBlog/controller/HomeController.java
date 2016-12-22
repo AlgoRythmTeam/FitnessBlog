@@ -77,6 +77,7 @@ public class HomeController {
             return "redirect:/";
         }
 
+
         Category category=this.categoryRepository.findOne(id);
 
         Set<Article> articles=category.getArticles();

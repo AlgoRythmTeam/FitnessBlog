@@ -73,7 +73,7 @@
                                            th:href="@{/comment{id}/comments(id = ${article.id})}"
                                            th:text="${'View Comments (' + #sets.size(article.comments) + ')'}"></a>
                                     </th:block>
-                                    <a class="btn btn-default btn-xs" th:href="@{/}">back &raquo;</a>
+                                    <a class="btn btn-default btn-xs" th:href="@{/category/{id}(id=${article.category.id})}">back &raquo;</a>
                                 </div>
                             </div>
                         </div>
