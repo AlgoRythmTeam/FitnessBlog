@@ -152,32 +152,6 @@ public class AdminUserController {
             this.userInfoRepository.delete(userInfo);
         }
 
-        Set<UserRating> userRatingExist=user.getUserRatings();
-        if (userRatingExist!=null) {
-
-            for (UserRating userRating : user.getUserRatings()) {
-
-                Rating currentRating = userRating.getRating();
-                boolean checkIfRatingEmpty = false;
-
-                if (currentRating.getRatingSize() == 1) {
-                    checkIfRatingEmpty = true;
-                }
-                this.userRatingRepository.delete(userRating);
-
-                if (checkIfRatingEmpty) {
-                    this.ratingRepository.delete(currentRating);
-                }
-            }
-        }
-
-        Set<Comment> commentsExist=user.getComments();
-        if (commentsExist!=null) {
-
-            for (Comment comment : user.getComments()) {
-                this.commentRepository.delete(comment);
-            }
-        }
 
         Set<Article> articlesExist=user.getArticles();
 
@@ -207,6 +181,42 @@ public class AdminUserController {
                 this.articleRepository.delete(article);
             }
         }
+
+        Set<UserRating> userRatingExist=user.getUserRatings();
+
+        if (userRatingExist!=null) {
+
+            for (UserRating userRating : user.getUserRatings()) {
+
+                if (userRating!=null) {
+
+                    Rating currentRating = userRating.getRating();
+                    boolean checkIfRatingEmpty = false;
+
+                    if (currentRating.getRatingSize() == 1) {
+                        checkIfRatingEmpty = true;
+                    }
+                    this.userRatingRepository.delete(userRating);
+
+                    if (checkIfRatingEmpty) {
+                        if (currentRating!=null) {
+                            this.ratingRepository.delete(currentRating);
+                        }
+                    }
+                }
+            }
+        }
+
+        Set<Comment> commentsExist=user.getComments();
+
+        if (commentsExist!=null) {
+
+            for (Comment comment : user.getComments()) {
+                this.commentRepository.delete(comment);
+            }
+        }
+
+
         this.userRepository.delete(user);
 
         return "redirect:/admin/users/";

@@ -238,7 +238,7 @@ public class ArticleController {
             this.ratingRepository.delete(rating);
 
         }
-        
+
         for (Comment comment : article.getComments()) {
             this.commentRepository.delete(comment);
         }
