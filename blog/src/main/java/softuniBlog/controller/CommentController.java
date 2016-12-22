@@ -109,10 +109,12 @@ public class CommentController {
 
         Comment comment = this.commentRepository.findOne(id);
 
-        if (!isUserAuthorOrAdmin(comment)) {
-            return "redirect:/comment/" + id;
-        }
 
+        if (!isUserAuthorOrAdmin(comment)) {
+            return "redirect:/comment" + comment.getArticle().getId() + "/comments";
+        }
+        Article article=comment.getArticle();
+        model.addAttribute("article",article);
         model.addAttribute("view", "comment/edit");
         model.addAttribute("comment", comment);
 
@@ -138,7 +140,7 @@ public class CommentController {
         Comment comment = this.commentRepository.findOne(id);
 
         if (!isUserAuthorOrAdmin(comment)) {
-            return "redirect:/comment/" + id;
+            return "redirect:/comment" + comment.getArticle().getId() + "/comments";
         }
 
 
@@ -160,9 +162,11 @@ public class CommentController {
         Comment comment = this.commentRepository.findOne(id);
 
         if (!isUserAuthorOrAdmin(comment)) {
-            return "redirect:/comment/" + id;
+            return "redirect:/comment" +comment.getArticle().getId() + "/comments";
         }
 
+        Article article=comment.getArticle();
+        model.addAttribute("article",article);
         model.addAttribute("view", "comment/delete");
         model.addAttribute("comment", comment);
 
