@@ -1,12 +1,13 @@
 package softuniBlog.entity;
 
 import javax.persistence.*;
+import javax.print.attribute.IntegerSyntax;
 
 @Entity
 @Table(name = "userInfo")
 public class UserInfo {
 
-    private Integer id ;
+    private Integer id;
 
     private Integer mass;
 
@@ -18,7 +19,8 @@ public class UserInfo {
 
     private User user;
 
-    public UserInfo() {}
+    public UserInfo() {
+    }
 
     public UserInfo(Integer mass, Integer height, Integer age, boolean sex, User user) {
         this.mass = mass;
@@ -83,44 +85,48 @@ public class UserInfo {
 
 
     @Transient
-    public String getRecommendation(){
+    public String getRecommendation() {
 
-       Integer coefficient = this.height-this.mass;
+        Integer coefficient = this.height - this.mass;
 
 
-        if (this.Age<10){
+        if (this.Age < 10) {
 
-           return "You are too young for fitness, go to play outside!" ;
-        }
-        else if (this.Age>60) {
-           return "You are too old for fitness, go walk in the park!" ;
-        }
-        else {
-            if (this.Sex==true) {
-                if (coefficient<100) {
-                   return "You must do swimming and jogging." ;
+            return "You are too young for fitness, go to play outside!";
+        } else if (this.Age > 60) {
+            return "You are too old for fitness, go walk in the park!";
+        } else {
+            if (this.Sex == true) {
+                if (coefficient < 100) {
+                    return "You must do swimming and jogging.";
+                } else {
+                    return "You must train bodybuilding.";
                 }
-                else {
-                    return "You must train bodybuilding." ;
-                }
-            }
-            else {
-                if (coefficient<110)
-                {
-                    return  "You must do Zumba and Yoga." ;
-                }
-                else
-                {
-                    return "You must praktice street fitness." ;
+            } else {
+                if (coefficient < 110) {
+                    return "You must do Zumba and Yoga.";
+                } else {
+                    return "You must praktice street fitness.";
                 }
             }
         }
-
-
 
     }
 
+    @Transient
+    public Long getDailyCallories() {
 
+        if (this.Sex) {
+            return Math.round(66.47 + (13.75 * this.mass) + (5 * this.height) - (6.75 * this.Age));
+        } else {
+            return Math.round(665.09 + (9.56 * this.mass) + (1.84 * this.height) - (4.67 * this.Age));
+        }
+    }
 
 
 }
+
+
+
+
+

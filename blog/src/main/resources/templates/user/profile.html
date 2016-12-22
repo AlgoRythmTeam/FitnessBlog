@@ -1,16 +1,9 @@
 <main>
-    <div class="container body-container">
+    <div class="container body-content span=8 offset=2">
         <div class="row">
-            <div th:if="${userInfo}" align="center">
-                <h4 th:text="${'Based on your body data our recommendation is: ' + userInfo.recommendation}"></h4>
+            <div align="center">
+                <h4 th:text="${'Hello ' + user.fullName + '. Smile more for a healthy life!'}"></h4>
             </div>
-            <div th:unless="${userInfo}" align="center">
-                <a class="btn btn-info "
-                   th:href="@{/userInfo/dataInput}">Enter User Information to get recommendations.</a>
-            </div>
-
-        </div>
-        <div class="row">
             <div id="main" class="col-sm-9">
                 <div>
                     <span th:text="${user.email}"></span>
@@ -27,5 +20,48 @@
             </div>
         </div>
 
+        <div class="row">
+            <div th:if="${userInfo}" align="center">
+                <h3 th:text="${'Based on your body data our recommendation is: ' + userInfo.recommendation}"></h3>
+            </div>
+            <div th:unless="${userInfo}" align="center">
+                <a class="btn btn-info "
+                   th:href="@{/userInfo/dataInput}">Enter User Body Information to get our recommendations.</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div th:if="${userInfo}">
+                <h4 th:text="${'Based on your body data we recommend daily food intake to be : ' + userInfo.dailyCallories}"></h4>
+
+                <div class="col-sm-6">
+                <p> The human body uses about 60% of calories just to keep up with
+                    natural processes at rest. The amount of calories you burn at
+                    rest is termed your basal metabolic rate (BMR). The more lean
+                    muscle mass you have the higher your BMR. By building a leaner
+                    more muscular physique you increase your calorie burning abilities
+                    around the clock!</p>
+                <p>
+                    The remainder of the energy pie is divided between activity and
+                    digestion. 30% of energy (calories) is used for physical activity
+                    while 10% is used in the process of digestion. This is why you can
+                    burn more calories by eating smaller meals more often.
+                </p>
+                </div>
+                <div class="col-sm-6">
+                <h5>Formula For BMR:</h5>
+
+                <p>W = weight in kilograms (weight (lbs)/2.2) =weight in kg </p>
+
+                <p>H = height in centimeters (inches x 2.54) =height in cm</p>
+
+                <p>A = age in years</p>
+                    <p></p>
+                <p>Men: BMR=66.47+ (13.75 x W) + (5.0 x H) - (6.75 x A)</p>
+
+                <p>Women: BMR=665.09 + (9.56 x W) + (1.84 x H) - (4.67 x A)</p>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
