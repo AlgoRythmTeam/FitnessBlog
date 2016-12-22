@@ -45,6 +45,9 @@ public class AdminUserController {
     @Autowired
     private RatingRepository ratingRepository;
 
+    @Autowired
+    private UserInfoRepository userInfoRepository;
+
     @GetMapping("/")
     @PreAuthorize("isAuthenticated()")
     public String listUsers(Model model) {
@@ -128,7 +131,11 @@ public class AdminUserController {
         }
         User user = this.userRepository.findOne(id);
 
+        UserInfo userInfo=user.getUserData();
 
+        if (userInfo!=null){
+            this.userInfoRepository.delete(userInfo);
+        }
 
         for (UserRating userRating: user.getUserRatings()){
 
