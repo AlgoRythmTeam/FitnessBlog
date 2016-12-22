@@ -227,13 +227,18 @@ public class ArticleController {
 
         Rating rating = article.getRating();
 
-        for (UserRating userRating : rating.getUserRatings()) {
+        if (rating!=null) {
 
-            this.userRatingRepository.delete(userRating);
+            for (UserRating userRating : rating.getUserRatings()) {
+
+                this.userRatingRepository.delete(userRating);
+            }
+
+
+            this.ratingRepository.delete(rating);
+
         }
-
-        this.ratingRepository.delete(rating);
-
+        
         for (Comment comment : article.getComments()) {
             this.commentRepository.delete(comment);
         }
