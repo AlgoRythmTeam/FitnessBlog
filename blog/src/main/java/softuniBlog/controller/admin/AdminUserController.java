@@ -119,6 +119,7 @@ public class AdminUserController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Integer id, Model model) {
         if (!this.userRepository.exists(id)) {
+
             return "redirect:/admin/users/";
         }
         User user = this.userRepository.findOne(id);
@@ -151,42 +152,61 @@ public class AdminUserController {
             this.userInfoRepository.delete(userInfo);
         }
 
-        for (UserRating userRating: user.getUserRatings()){
+        Set<UserRating> userRatingExist=user.getUserRatings();
+        if (userRatingExist!=null) {
 
-            Rating currentRating=userRating.getRating();
-            boolean checkIfRatingEmpty=false;
+            for (UserRating userRating : user.getUserRatings()) {
 
-            if (currentRating.getRatingSize()==1){
-                checkIfRatingEmpty=true;
-            }
-            this.userRatingRepository.delete(userRating);
+                Rating currentRating = userRating.getRating();
+                boolean checkIfRatingEmpty = false;
 
-            if (checkIfRatingEmpty){
-                this.ratingRepository.delete(currentRating);
+                if (currentRating.getRatingSize() == 1) {
+                    checkIfRatingEmpty = true;
+                }
+                this.userRatingRepository.delete(userRating);
+
+                if (checkIfRatingEmpty) {
+                    this.ratingRepository.delete(currentRating);
+                }
             }
         }
 
+        Set<Comment> commentsExist=user.getComments();
+        if (commentsExist!=null) {
 
-        for (Comment comment: user.getComments()){
-            this.commentRepository.delete(comment);
-        }
-
-        for(Article article:user.getArticles()){
-            for (Comment comment: article.getComments()){
+            for (Comment comment : user.getComments()) {
                 this.commentRepository.delete(comment);
             }
-
-            for (UserRating userRating: article.getRating().getUserRatings()){
-                this.userRatingRepository.delete(userRating);
-            }
-
-            Rating articleRating=article.getRating();
-
-            this.ratingRepository.delete(articleRating);
-
-            this.articleRepository.delete(article);
         }
 
+        Set<Article> articlesExist=user.getArticles();
+
+        if (articlesExist!=null) {
+
+            for (Article article : user.getArticles()) {
+                for (Comment comment : article.getComments()) {
+                    this.commentRepository.delete(comment);
+                }
+
+                Rating articleRating = article.getRating();
+
+                if (articleRating!=null) {
+
+                    Set<UserRating> currentUserRatingExist = article.getRating().getUserRatings();
+
+                    if (currentUserRatingExist != null) {
+
+                        for (UserRating userRating : article.getRating().getUserRatings()) {
+                            this.userRatingRepository.delete(userRating);
+                        }
+                    }
+
+
+                    this.ratingRepository.delete(articleRating);
+                }
+                this.articleRepository.delete(article);
+            }
+        }
         this.userRepository.delete(user);
 
         return "redirect:/admin/users/";
