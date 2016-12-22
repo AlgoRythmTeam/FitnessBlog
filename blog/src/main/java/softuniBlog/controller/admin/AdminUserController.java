@@ -143,7 +143,7 @@ public class AdminUserController {
             }
         }
 
-        
+
         UserInfo userInfo=user.getUserData();
 
 

@@ -1,0 +1,18 @@
+<main>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-dismissible alert-danger">
+                    <h3 align="center" th:text="${ 'The  Email: ' + user.email +  '  is already registered !' }"></h3>
+                    <h4 align="center">
+                        Please register with another email.</h4>
+                    <h4 align="center">Thank you very much for your understanding.</h4>
+
+                    <div style="text-align: center">
+                        <a class="btn btn-info btn-lg" th:href="@{/register}">Let's do it.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

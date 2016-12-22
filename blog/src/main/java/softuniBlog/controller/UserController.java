@@ -53,7 +53,9 @@ public class UserController {
 
         if (userRepository.findByEmail(userBindingModel.getEmail())!=null ) {
 
-            return "redirect:/register";
+            Integer id=this.userRepository.findByEmail(userBindingModel.getEmail()).getId();
+
+            return "redirect:/error/internal/" + id;
         }
 
 

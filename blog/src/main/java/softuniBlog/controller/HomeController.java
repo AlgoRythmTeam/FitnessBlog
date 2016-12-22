@@ -8,19 +8,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import softuniBlog.entity.Article;
 import softuniBlog.entity.Category;
+import softuniBlog.entity.User;
 import softuniBlog.repository.ArticleRepository;
 import softuniBlog.repository.CategoryRepository;
+import softuniBlog.repository.UserRepository;
 
 import java.util.List;
 import java.util.Set;
 
 @Controller
 public class HomeController {
+
     @Autowired
     private ArticleRepository articleRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -37,7 +43,25 @@ public class HomeController {
         model.addAttribute("view","error/403");
 
         return "base-layout";
-    }    @GetMapping("/category/{id}")
+    }
+
+    @RequestMapping("/error/internal/{id}")
+    public String sameUserEmail(Model model, @PathVariable Integer id){
+        if (!this.userRepository.exists(id)){
+            return "redirect:/";
+        }
+
+        User user=this.userRepository.findById(id);
+
+        model.addAttribute("user",user);
+        model.addAttribute("view","error/internal1");
+
+        return "base-layout";
+    }
+
+
+
+    @GetMapping("/category/{id}")
     public String listArticles(Model model, @PathVariable Integer id){
 
         if(!this.categoryRepository.exists(id)){
