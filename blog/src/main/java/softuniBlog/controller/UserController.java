@@ -49,6 +49,15 @@ public class UserController {
             return "redirect:/register";
         }
 
+
+
+        if (userRepository.findByEmail(userBindingModel.getEmail())!=null ) {
+
+            return "redirect:/register";
+        }
+
+
+
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         User user = new User(
@@ -108,12 +117,7 @@ public class UserController {
 
             model.addAttribute("userInfo",userInfo);
 
-        } else {
-
-
-
         }
-
 
         return "base-layout";
     }

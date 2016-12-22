@@ -48,6 +48,9 @@ public class AdminUserController {
     @Autowired
     private UserInfoRepository userInfoRepository;
 
+    @Autowired
+    private WorkoutRepository workoutRepository;
+
     @GetMapping("/")
     @PreAuthorize("isAuthenticated()")
     public String listUsers(Model model) {
@@ -131,7 +134,18 @@ public class AdminUserController {
         }
         User user = this.userRepository.findOne(id);
 
+
+        Set<Workout> workouts=user.getWorkouts();
+
+        if (workouts!=null){
+            for (Workout workout:workouts){
+                this.workoutRepository.delete(workout);
+            }
+        }
+
+        
         UserInfo userInfo=user.getUserData();
+
 
         if (userInfo!=null){
             this.userInfoRepository.delete(userInfo);
